@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-// Chase was still here
+// Chase was still here, yay!
 // Adam was Here
 //Alex was also here
 public class MainActivity extends AppCompatActivity {
