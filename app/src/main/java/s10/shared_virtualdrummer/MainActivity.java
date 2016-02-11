@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 // Chase was still here
 // Adam was Here
+//Alex was also here
 public class MainActivity extends AppCompatActivity {
 
     @Override
