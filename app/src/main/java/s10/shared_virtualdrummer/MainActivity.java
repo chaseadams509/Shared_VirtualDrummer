@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 // Chase was still here
-//Adam was Here
+// Adam was Here
 public class MainActivity extends AppCompatActivity {
 
     @Override
