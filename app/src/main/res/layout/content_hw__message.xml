@@ -8,12 +8,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="s10.shared_virtualdrummer.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="s10.shared_virtualdrummer"
+    tools:showIn="@layout/activity_hw__message">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
 </RelativeLayout>
