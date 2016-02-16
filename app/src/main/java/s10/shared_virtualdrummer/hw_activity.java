@@ -1,5 +1,6 @@
 package s10.shared_virtualdrummer;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,10 +11,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class hw_activity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "s10.shared_virtualdrummer";
+    private final static int REQUEST_ENABLE_BT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,35 @@ public class hw_activity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        EditText editText = (EditText)findViewById(R.id.edit_message);
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        // Hardware Bluetooth available check
+        if(mBluetoothAdapter == null) {
+            editText.setText("No Bluetooth Available!", TextView.BufferType.EDITABLE);
+            return;
+        }
+        editText.setText("Bluetooth Available!", TextView.BufferType.EDITABLE);
+
+        if(!mBluetoothAdapter.isEnabled()){
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        // Check which request we're responding to
+        if(requestCode == REQUEST_ENABLE_BT) {
+            EditText editText = (EditText) findViewById(R.id.edit_message);
+
+            // Make sure the request was successful
+            if(resultCode == RESULT_OK){
+                editText.setText("Bluetooth is Enabled and ready!", TextView.BufferType.EDITABLE);
+            } else {
+                editText.setText("Bluetooth was not enabled...", TextView.BufferType.EDITABLE);
+            }
+        }
     }
 
     @Override
