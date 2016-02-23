@@ -8,6 +8,6 @@
     <string name="on_text">Turn On</string>
     <string name="off_text">Turn Off</string>
     <string name="list_paired">List Paired Devices</string>
-    <string name="find_devices">Search new Devices</string>
-    <string name="find_cancel">Cancel Searching Devices</string>
+    <!--<string name="find_devices">Search new Devices</string>
+    <string name="find_cancel">Cancel Searching Devices</string>-->
 </resources>

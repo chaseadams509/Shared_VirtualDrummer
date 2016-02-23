@@ -32,8 +32,8 @@ public class hw_activity extends AppCompatActivity {
     private Button onBtn;
     private Button offBtn;
     private Button listBtn;
-    private Button findBtn;
-    private Button cancelBtn;
+    //private Button findBtn;
+    //private Button cancelBtn;
     private TextView statusText;
     private BluetoothAdapter myBluetoothAdapter;
     private Set<BluetoothDevice> pairedDevices;
@@ -62,8 +62,8 @@ public class hw_activity extends AppCompatActivity {
             onBtn.setEnabled(false);
             offBtn.setEnabled(false);
             listBtn.setEnabled(false);
-            findBtn.setEnabled(false);
-            cancelBtn.setEnabled(false);
+            //findBtn.setEnabled(false);
+            //cancelBtn.setEnabled(false);
             statusText.setText("Status: not supported");
         } else {
             statusText = (TextView)findViewById(R.id.status_text);
@@ -91,7 +91,7 @@ public class hw_activity extends AppCompatActivity {
                     list_bt(v);
                 }
             });
-
+            /*
             findBtn = (Button)findViewById(R.id.search);
             findBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -106,12 +106,18 @@ public class hw_activity extends AppCompatActivity {
                     cancel_finding_bt(v);
                 }
             });
+            */
             myListView = (ListView)findViewById(R.id.listView1);
             //create the arrayAdapter that contains the BTDevices
             BTArrayAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1);
             myListView.setAdapter(BTArrayAdapter);
 
+        }
+        if(!myBluetoothAdapter.isEnabled()) {
+            listBtn.setEnabled(false);
+            //findBtn.setEnabled(false);
+            //cancelBtn.setEnabled(false);
         }
         /*
         EditText editText = (EditText)findViewById(R.id.edit_message);
@@ -136,15 +142,15 @@ public class hw_activity extends AppCompatActivity {
             startActivityForResult(turnOnIntent, REQUEST_ENABLE_BT);
         }
         listBtn.setEnabled(true);
-        findBtn.setEnabled(true);
-        cancelBtn.setEnabled(true);
+        //findBtn.setEnabled(true);
+        //cancelBtn.setEnabled(true);
     }
 
     public void turn_bt_off(View view) {
         myBluetoothAdapter.disable();
         listBtn.setEnabled(false);
-        findBtn.setEnabled(false);
-        cancelBtn.setEnabled(false);
+        //findBtn.setEnabled(false);
+        //cancelBtn.setEnabled(false);
         statusText.setText("Status: Disconnected");
     }
 
@@ -167,7 +173,7 @@ public class hw_activity extends AppCompatActivity {
             }
         }
     };
-
+/*
     public void find_bt(View view) {
         if(!myBluetoothAdapter.isDiscovering()) {
             BTArrayAdapter.clear();
@@ -184,7 +190,7 @@ public class hw_activity extends AppCompatActivity {
         }
         statusText.setText("Status: Enabled");
     }
-
+*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         // Check which request we're responding to
