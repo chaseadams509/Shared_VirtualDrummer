@@ -27,6 +27,9 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -38,6 +41,7 @@ public class hw_activity extends AppCompatActivity {
     private final static int REQUEST_ENABLE_BT = 1;
     protected final static int SUCCESS_CONNECT = 0;
     protected final static int FAIL_CONNECT = -1;
+    protected final static int MESSAGE_READ = 1;
     private Button onBtn;
     private Button offBtn;
     private Button listBtn;
@@ -46,9 +50,16 @@ public class hw_activity extends AppCompatActivity {
     private TextView statusText;
     private BluetoothAdapter myBluetoothAdapter;
     private Set<BluetoothDevice> pairedDevices;
+    private ArrayList<BluetoothDevice> pairedDevicesArray;
     private ListView myListView;
     private ArrayAdapter<String> BTArrayAdapter;
-    Handler mHandler;
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            check_msg_connection(msg);
+        }
+    };
 
 
     @Override
@@ -148,23 +159,7 @@ public class hw_activity extends AppCompatActivity {
             //cancelBtn.setEnabled(false);
         }
 
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch(msg.what) {
-                    case SUCCESS_CONNECT:
-                        //DO Something
-                        //statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
-                        statusText.append("-> SUCCESS!");
-                        break;
-                    case FAIL_CONNECT:
-                        //DO Something
-                        statusText.append("-> FAILED.");
-                        break;
-                }
-            }
-        };
+        pairedDevicesArray = new ArrayList<BluetoothDevice>();
         /*
         EditText editText = (EditText)findViewById(R.id.edit_message);
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -203,8 +198,10 @@ public class hw_activity extends AppCompatActivity {
     public void list_bt(View view) {
         pairedDevices = myBluetoothAdapter.getBondedDevices();
         BTArrayAdapter.clear();
-        for (BluetoothDevice device : pairedDevices)
+        for (BluetoothDevice device : pairedDevices) {
             BTArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+            pairedDevicesArray.add(device);
+        }
     }
 
     public void connect_dv(AdapterView<?> par, View v, int pos, long id) {
@@ -214,16 +211,29 @@ public class hw_activity extends AppCompatActivity {
         int name_end = mDeviceInfo.indexOf("\n");
         statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
 
-        Object[] o = pairedDevices.toArray();
-        BluetoothDevice selectedDevice = (BluetoothDevice)o[pos];
+        //Object[] o = pairedDevices.toArray();
+        //BluetoothDevice selectedDevice = (BluetoothDevice)o[pos];
+        BluetoothDevice selectedDevice = pairedDevicesArray.get(pos);
         ConnectThread connect = new ConnectThread(selectedDevice);
         connect.start();
-        //Bundle mBundle = new Bundle();
-        //mBundle.putString("DeviceAddress", mDeviceAddress);
-        //Intent mBackIntent = new Intent();
-        //mBackIntent.putExtras(mBundle);
-        //setResult(Activity.RESULT_OK, mBackIntent);
-        //finish();
+    }
+
+    public void check_msg_connection(Message msg) {
+        switch(msg.what) {
+            case SUCCESS_CONNECT:
+                //statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
+                ConnectedThread connectedThread = new ConnectedThread((BluetoothSocket)msg.obj);
+                statusText.append("-> SUCCESS!");
+                break;
+            case FAIL_CONNECT:
+                statusText.append("-> FAILED.");
+                break;
+            case MESSAGE_READ:
+                byte[] readBuf = (byte[])msg.obj;
+                String s = new String(readBuf);
+                statusText.setText("Status: Data is " + s);
+                break;
+        }
     }
 
     final BroadcastReceiver bReceiver = new BroadcastReceiver() {
@@ -346,14 +356,14 @@ public class hw_activity extends AppCompatActivity {
             }
 
             // Do work to manage the connection (in a separate thread)
-            manageConnectedSocket(mmSocket);
-            mHandler.obtainMessage(SUCCESS_CONNECT);
+            //manageConnectedSocket(mmSocket);
+            mHandler.obtainMessage(SUCCESS_CONNECT, mmSocket).sendToTarget();
         }
-
+/*
         private void manageConnectedSocket(BluetoothSocket mmSocket2) {
             //TODO: Auto-generated method stub
         }
-
+*/
         /** Will cancel an in-progress connection, and close the socket */
         public void cancel() {
             try {
@@ -361,6 +371,63 @@ public class hw_activity extends AppCompatActivity {
             } catch (IOException e) { }
         }
     }
+
+    private class ConnectedThread extends Thread {
+        private final BluetoothSocket mmSocket;
+        private final InputStream mmInStream;
+        private final OutputStream mmOutStream;
+
+        public ConnectedThread(BluetoothSocket socket) {
+            mmSocket = socket;
+            InputStream tmpIn = null;
+            OutputStream tmpOut = null;
+
+            // Get the input and output streams, using temp objects because
+            // member streams are final
+            try {
+                tmpIn = socket.getInputStream();
+                tmpOut = socket.getOutputStream();
+            } catch (IOException e) { }
+
+            mmInStream = tmpIn;
+            mmOutStream = tmpOut;
+        }
+
+        public void run() {
+            byte[] buffer;  // buffer store for the stream
+            int bytes; // bytes returned from read()
+
+            // Keep listening to the InputStream until an exception occurs
+            while (true) {
+                try {
+                    buffer = new byte[1024];
+                    // Read from the InputStream
+                    bytes = mmInStream.read(buffer);
+                    // Send the obtained bytes to the UI activity
+                    mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
+                            .sendToTarget();
+                } catch (IOException e) {
+                    break;
+                }
+
+            }
+        }
+
+        /* Call this from the main activity to send data to the remote device */
+        public void write(byte[] bytes) {
+            try {
+                mmOutStream.write(bytes);
+            } catch (IOException e) { }
+        }
+
+        /* Call this from the main activity to shutdown the connection */
+        public void cancel() {
+            try {
+                mmSocket.close();
+            } catch (IOException e) { }
+        }
+    }
+
 
 }
 
