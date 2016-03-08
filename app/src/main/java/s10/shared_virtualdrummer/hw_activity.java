@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,6 +26,9 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -38,17 +40,23 @@ public class hw_activity extends AppCompatActivity {
     private final static int REQUEST_ENABLE_BT = 1;
     protected final static int SUCCESS_CONNECT = 0;
     protected final static int FAIL_CONNECT = -1;
+    protected final static int MESSAGE_READ = 1;
     private Button onBtn;
     private Button offBtn;
     private Button listBtn;
-    //private Button findBtn;
-    //private Button cancelBtn;
     private TextView statusText;
     private BluetoothAdapter myBluetoothAdapter;
     private Set<BluetoothDevice> pairedDevices;
+    private ArrayList<BluetoothDevice> pairedDevicesArray;
     private ListView myListView;
     private ArrayAdapter<String> BTArrayAdapter;
-    Handler mHandler;
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            check_msg_connection(msg);
+        }
+    };
 
 
     @Override
@@ -81,8 +89,6 @@ public class hw_activity extends AppCompatActivity {
             onBtn.setEnabled(false);
             offBtn.setEnabled(false);
             listBtn.setEnabled(false);
-            //findBtn.setEnabled(false);
-            //cancelBtn.setEnabled(false);
             statusText.setText("Status: not supported");
         } else {
             statusText = (TextView)findViewById(R.id.status_text);
@@ -110,22 +116,6 @@ public class hw_activity extends AppCompatActivity {
                     list_bt(v);
                 }
             });
-            /*
-            findBtn = (Button)findViewById(R.id.search);
-            findBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    find_bt(v);
-                }
-            });
-            cancelBtn = (Button)findViewById(R.id.cancel_search);
-            cancelBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cancel_finding_bt(v);
-                }
-            });
-            */
             myListView = (ListView)findViewById(R.id.listView1);
 
             myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -144,42 +134,9 @@ public class hw_activity extends AppCompatActivity {
         }
         if(!myBluetoothAdapter.isEnabled()) {
             listBtn.setEnabled(false);
-            //findBtn.setEnabled(false);
-            //cancelBtn.setEnabled(false);
         }
 
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch(msg.what) {
-                    case SUCCESS_CONNECT:
-                        //DO Something
-                        //statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
-                        statusText.append("-> SUCCESS!");
-                        break;
-                    case FAIL_CONNECT:
-                        //DO Something
-                        statusText.append("-> FAILED.");
-                        break;
-                }
-            }
-        };
-        /*
-        EditText editText = (EditText)findViewById(R.id.edit_message);
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        // Hardware Bluetooth available check
-        if(mBluetoothAdapter == null) {
-            editText.setText("No Bluetooth Available!", TextView.BufferType.EDITABLE);
-            return;
-        }
-        editText.setText("Bluetooth Available!", TextView.BufferType.EDITABLE);
-
-        if(!mBluetoothAdapter.isEnabled()){
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
-        */
+        pairedDevicesArray = new ArrayList<BluetoothDevice>();
     }
 
     public void turn_bt_on(View view){
@@ -188,23 +145,21 @@ public class hw_activity extends AppCompatActivity {
             startActivityForResult(turnOnIntent, REQUEST_ENABLE_BT);
         }
         listBtn.setEnabled(true);
-        //findBtn.setEnabled(true);
-        //cancelBtn.setEnabled(true);
     }
 
     public void turn_bt_off(View view) {
         myBluetoothAdapter.disable();
         listBtn.setEnabled(false);
-        //findBtn.setEnabled(false);
-        //cancelBtn.setEnabled(false);
         statusText.setText("Status: Disconnected");
     }
 
     public void list_bt(View view) {
         pairedDevices = myBluetoothAdapter.getBondedDevices();
         BTArrayAdapter.clear();
-        for (BluetoothDevice device : pairedDevices)
+        for (BluetoothDevice device : pairedDevices) {
             BTArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+            pairedDevicesArray.add(device);
+        }
     }
 
     public void connect_dv(AdapterView<?> par, View v, int pos, long id) {
@@ -214,16 +169,27 @@ public class hw_activity extends AppCompatActivity {
         int name_end = mDeviceInfo.indexOf("\n");
         statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
 
-        Object[] o = pairedDevices.toArray();
-        BluetoothDevice selectedDevice = (BluetoothDevice)o[pos];
+        BluetoothDevice selectedDevice = pairedDevicesArray.get(pos);
         ConnectThread connect = new ConnectThread(selectedDevice);
         connect.start();
-        //Bundle mBundle = new Bundle();
-        //mBundle.putString("DeviceAddress", mDeviceAddress);
-        //Intent mBackIntent = new Intent();
-        //mBackIntent.putExtras(mBundle);
-        //setResult(Activity.RESULT_OK, mBackIntent);
-        //finish();
+    }
+
+    public void check_msg_connection(Message msg) {
+        switch(msg.what) {
+            case SUCCESS_CONNECT:
+                ConnectedThread connectedThread = new ConnectedThread((BluetoothSocket)msg.obj);
+                connectedThread.start();
+                statusText.append("-> SUCCESS!");
+                break;
+            case FAIL_CONNECT:
+                statusText.append("-> FAILED.");
+                break;
+            case MESSAGE_READ:
+                byte[] readBuf = (byte[])msg.obj;
+                String s = new String(readBuf);
+                statusText.setText("Status: Data is " + s);
+                break;
+        }
     }
 
     final BroadcastReceiver bReceiver = new BroadcastReceiver() {
@@ -239,24 +205,7 @@ public class hw_activity extends AppCompatActivity {
             }
         }
     };
-/*
-    public void find_bt(View view) {
-        if(!myBluetoothAdapter.isDiscovering()) {
-            BTArrayAdapter.clear();
-            myBluetoothAdapter.startDiscovery();
-            statusText.setText("Status: Discovering");
-            registerReceiver(bReceiver,
-                    new IntentFilter(BluetoothDevice.ACTION_FOUND));
-        }
-    }
 
-    public void cancel_finding_bt(View view) {
-        if(myBluetoothAdapter.isDiscovering()) {
-            myBluetoothAdapter.cancelDiscovery();
-        }
-        statusText.setText("Status: Enabled");
-    }
-*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         // Check which request we're responding to
@@ -346,12 +295,7 @@ public class hw_activity extends AppCompatActivity {
             }
 
             // Do work to manage the connection (in a separate thread)
-            manageConnectedSocket(mmSocket);
-            mHandler.obtainMessage(SUCCESS_CONNECT);
-        }
-
-        private void manageConnectedSocket(BluetoothSocket mmSocket2) {
-            //TODO: Auto-generated method stub
+            mHandler.obtainMessage(SUCCESS_CONNECT, mmSocket).sendToTarget();
         }
 
         /** Will cancel an in-progress connection, and close the socket */
@@ -361,6 +305,63 @@ public class hw_activity extends AppCompatActivity {
             } catch (IOException e) { }
         }
     }
+
+    private class ConnectedThread extends Thread {
+        private final BluetoothSocket mmSocket;
+        private final InputStream mmInStream;
+        private final OutputStream mmOutStream;
+
+        public ConnectedThread(BluetoothSocket socket) {
+            mmSocket = socket;
+            InputStream tmpIn = null;
+            OutputStream tmpOut = null;
+
+            // Get the input and output streams, using temp objects because
+            // member streams are final
+            try {
+                tmpIn = socket.getInputStream();
+                tmpOut = socket.getOutputStream();
+            } catch (IOException e) { }
+
+            mmInStream = tmpIn;
+            mmOutStream = tmpOut;
+        }
+
+        public void run() {
+            byte[] buffer;  // buffer store for the stream
+            int bytes; // bytes returned from read()
+
+            // Keep listening to the InputStream until an exception occurs
+            while (true) {
+                try {
+                    buffer = new byte[1024];
+                    // Read from the InputStream
+                    bytes = mmInStream.read(buffer);
+                    // Send the obtained bytes to the UI activity
+                    mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
+                            .sendToTarget();
+                } catch (IOException e) {
+                    break;
+                }
+
+            }
+        }
+
+        /* Call this from the main activity to send data to the remote device */
+        public void write(byte[] bytes) {
+            try {
+                mmOutStream.write(bytes);
+            } catch (IOException e) { }
+        }
+
+        /* Call this from the main activity to shutdown the connection */
+        public void cancel() {
+            try {
+                mmSocket.close();
+            } catch (IOException e) { }
+        }
+    }
+
 
 }
 
