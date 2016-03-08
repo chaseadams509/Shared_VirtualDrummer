@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -45,8 +44,6 @@ public class hw_activity extends AppCompatActivity {
     private Button onBtn;
     private Button offBtn;
     private Button listBtn;
-    //private Button findBtn;
-    //private Button cancelBtn;
     private TextView statusText;
     private BluetoothAdapter myBluetoothAdapter;
     private Set<BluetoothDevice> pairedDevices;
@@ -92,8 +89,6 @@ public class hw_activity extends AppCompatActivity {
             onBtn.setEnabled(false);
             offBtn.setEnabled(false);
             listBtn.setEnabled(false);
-            //findBtn.setEnabled(false);
-            //cancelBtn.setEnabled(false);
             statusText.setText("Status: not supported");
         } else {
             statusText = (TextView)findViewById(R.id.status_text);
@@ -121,22 +116,6 @@ public class hw_activity extends AppCompatActivity {
                     list_bt(v);
                 }
             });
-            /*
-            findBtn = (Button)findViewById(R.id.search);
-            findBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    find_bt(v);
-                }
-            });
-            cancelBtn = (Button)findViewById(R.id.cancel_search);
-            cancelBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cancel_finding_bt(v);
-                }
-            });
-            */
             myListView = (ListView)findViewById(R.id.listView1);
 
             myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -155,26 +134,9 @@ public class hw_activity extends AppCompatActivity {
         }
         if(!myBluetoothAdapter.isEnabled()) {
             listBtn.setEnabled(false);
-            //findBtn.setEnabled(false);
-            //cancelBtn.setEnabled(false);
         }
 
         pairedDevicesArray = new ArrayList<BluetoothDevice>();
-        /*
-        EditText editText = (EditText)findViewById(R.id.edit_message);
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        // Hardware Bluetooth available check
-        if(mBluetoothAdapter == null) {
-            editText.setText("No Bluetooth Available!", TextView.BufferType.EDITABLE);
-            return;
-        }
-        editText.setText("Bluetooth Available!", TextView.BufferType.EDITABLE);
-
-        if(!mBluetoothAdapter.isEnabled()){
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
-        */
     }
 
     public void turn_bt_on(View view){
@@ -183,15 +145,11 @@ public class hw_activity extends AppCompatActivity {
             startActivityForResult(turnOnIntent, REQUEST_ENABLE_BT);
         }
         listBtn.setEnabled(true);
-        //findBtn.setEnabled(true);
-        //cancelBtn.setEnabled(true);
     }
 
     public void turn_bt_off(View view) {
         myBluetoothAdapter.disable();
         listBtn.setEnabled(false);
-        //findBtn.setEnabled(false);
-        //cancelBtn.setEnabled(false);
         statusText.setText("Status: Disconnected");
     }
 
@@ -211,8 +169,6 @@ public class hw_activity extends AppCompatActivity {
         int name_end = mDeviceInfo.indexOf("\n");
         statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
 
-        //Object[] o = pairedDevices.toArray();
-        //BluetoothDevice selectedDevice = (BluetoothDevice)o[pos];
         BluetoothDevice selectedDevice = pairedDevicesArray.get(pos);
         ConnectThread connect = new ConnectThread(selectedDevice);
         connect.start();
@@ -221,7 +177,6 @@ public class hw_activity extends AppCompatActivity {
     public void check_msg_connection(Message msg) {
         switch(msg.what) {
             case SUCCESS_CONNECT:
-                //statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
                 ConnectedThread connectedThread = new ConnectedThread((BluetoothSocket)msg.obj);
                 connectedThread.start();
                 statusText.append("-> SUCCESS!");
@@ -250,24 +205,7 @@ public class hw_activity extends AppCompatActivity {
             }
         }
     };
-/*
-    public void find_bt(View view) {
-        if(!myBluetoothAdapter.isDiscovering()) {
-            BTArrayAdapter.clear();
-            myBluetoothAdapter.startDiscovery();
-            statusText.setText("Status: Discovering");
-            registerReceiver(bReceiver,
-                    new IntentFilter(BluetoothDevice.ACTION_FOUND));
-        }
-    }
 
-    public void cancel_finding_bt(View view) {
-        if(myBluetoothAdapter.isDiscovering()) {
-            myBluetoothAdapter.cancelDiscovery();
-        }
-        statusText.setText("Status: Enabled");
-    }
-*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         // Check which request we're responding to
@@ -357,14 +295,9 @@ public class hw_activity extends AppCompatActivity {
             }
 
             // Do work to manage the connection (in a separate thread)
-            //manageConnectedSocket(mmSocket);
             mHandler.obtainMessage(SUCCESS_CONNECT, mmSocket).sendToTarget();
         }
-/*
-        private void manageConnectedSocket(BluetoothSocket mmSocket2) {
-            //TODO: Auto-generated method stub
-        }
-*/
+
         /** Will cancel an in-progress connection, and close the socket */
         public void cancel() {
             try {
