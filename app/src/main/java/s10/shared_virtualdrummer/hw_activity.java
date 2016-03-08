@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +36,8 @@ public class hw_activity extends AppCompatActivity {
     public final static UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private final static int REQUEST_ENABLE_BT = 1;
+    protected final static int SUCCESS_CONNECT = 0;
+    protected final static int FAIL_CONNECT = -1;
     private Button onBtn;
     private Button offBtn;
     private Button listBtn;
@@ -44,6 +48,7 @@ public class hw_activity extends AppCompatActivity {
     private Set<BluetoothDevice> pairedDevices;
     private ListView myListView;
     private ArrayAdapter<String> BTArrayAdapter;
+    Handler mHandler;
 
 
     @Override
@@ -133,6 +138,24 @@ public class hw_activity extends AppCompatActivity {
             //findBtn.setEnabled(false);
             //cancelBtn.setEnabled(false);
         }
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch(msg.what) {
+                    case SUCCESS_CONNECT:
+                        //DO Something
+                        //statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
+                        statusText.append("-> SUCCESS!");
+                        break;
+                    case FAIL_CONNECT:
+                        //DO Something
+                        statusText.append("-> FAILED.");
+                        break;
+                }
+            }
+        };
         /*
         EditText editText = (EditText)findViewById(R.id.edit_message);
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -308,11 +331,14 @@ public class hw_activity extends AppCompatActivity {
                 try {
                     mmSocket.close();
                 } catch (IOException closeException) { }
+
+                mHandler.obtainMessage(FAIL_CONNECT);
                 return;
             }
 
             // Do work to manage the connection (in a separate thread)
             manageConnectedSocket(mmSocket);
+            mHandler.obtainMessage(SUCCESS_CONNECT);
         }
 
         private void manageConnectedSocket(BluetoothSocket mmSocket2) {
