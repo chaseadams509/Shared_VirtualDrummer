@@ -223,6 +223,7 @@ public class hw_activity extends AppCompatActivity {
             case SUCCESS_CONNECT:
                 //statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
                 ConnectedThread connectedThread = new ConnectedThread((BluetoothSocket)msg.obj);
+                connectedThread.start();
                 statusText.append("-> SUCCESS!");
                 break;
             case FAIL_CONNECT:
