@@ -7,24 +7,6 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_hw_activity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp">
-        <EditText android:id="@+id/edit_message"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/edit_message"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_send"
-            android:onClick="sendMessage"/>
-    </LinearLayout>
-
     <TextView
         android:id="@+id/status_text"
         android:layout_width="wrap_content"
@@ -60,16 +42,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/list_paired"/>
-   <!-- <Button
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/find_devices"/>
-    <Button
-        android:id="@+id/cancel_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/find_cancel"/>-->
     <ListView
         android:id="@+id/listView1"
         android:layout_width="wrap_content"

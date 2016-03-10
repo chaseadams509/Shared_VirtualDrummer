@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,7 +17,6 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,18 +35,23 @@ public class hw_activity extends AppCompatActivity {
     public final static UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private final static int REQUEST_ENABLE_BT = 1;
-    protected final static int SUCCESS_CONNECT = 0;
+
     protected final static int FAIL_CONNECT = -1;
+    protected final static int SUCCESS_CONNECT = 0;
     protected final static int MESSAGE_READ = 1;
+
     private Button onBtn;
     private Button offBtn;
     private Button listBtn;
     private TextView statusText;
-    private BluetoothAdapter myBluetoothAdapter;
-    private Set<BluetoothDevice> pairedDevices;
-    private ArrayList<BluetoothDevice> pairedDevicesArray;
+
     private ListView myListView;
     private ArrayAdapter<String> BTArrayAdapter;
+    private Set<BluetoothDevice> pairedDevices;
+    private ArrayList<BluetoothDevice> pairedDevicesArray;
+
+    private BluetoothAdapter myBluetoothAdapter;
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -72,15 +74,6 @@ public class hw_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(hw_activity.this, Sound.class);
                 startActivity(intent);
-            }
-        });
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
 
@@ -211,7 +204,6 @@ public class hw_activity extends AppCompatActivity {
         // Check which request we're responding to
         if(requestCode == REQUEST_ENABLE_BT) {
             // Make sure the request was successful
-            //if(resultCode == RESULT_OK){
             if(myBluetoothAdapter.isEnabled()) {
                 statusText.setText("Status: Enabled");
             } else {
@@ -242,15 +234,6 @@ public class hw_activity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendMessage(View view) {
-        //Do something in response to button
-        Intent intent = new Intent(this, hw_Message.class);
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -260,13 +243,13 @@ public class hw_activity extends AppCompatActivity {
 
     private class ConnectThread extends Thread {
         private final BluetoothSocket mmSocket;
-        private final BluetoothDevice mmDevice;
+        //private final BluetoothDevice mmDevice;
 
         public ConnectThread(BluetoothDevice device) {
             // Use a temporary object that is later assigned to mmSocket,
             // because mmSocket is final
             BluetoothSocket tmp = null;
-            mmDevice = device;
+            //mmDevice = device;
 
             // Get a BluetoothSocket to connect with the given BluetoothDevice
             try {
