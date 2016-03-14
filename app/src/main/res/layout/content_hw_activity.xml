@@ -48,5 +48,11 @@
         android:layout_height="200dp">
 
     </ListView>
+    <TextView
+        android:id="@+id/raw_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="No Data"/>
 
 </LinearLayout>
