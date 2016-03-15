@@ -15,14 +15,7 @@ public class Sound extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
     setContentView(R.layout.sound);
-
-    final MediaPlayer bass = MediaPlayer.create(this, R.raw.bass);
-    final MediaPlayer hiHat = MediaPlayer.create(this, R.raw.hi_hat);
-    final MediaPlayer ride = MediaPlayer.create(this, R.raw.ride);
-    final MediaPlayer snare = MediaPlayer.create(this, R.raw.snare);
-    final MediaPlayer tom1 = MediaPlayer.create(this, R.raw.tom1);
-    final MediaPlayer tom2 = MediaPlayer.create(this, R.raw.tom2);
-    final MediaPlayer tom3 = MediaPlayer.create(this, R.raw.tom3);
+        final SoundPlayer soundPlayer = new SoundPlayer(this);
 
         Button playbass = (Button) this.findViewById(R.id.play_bass);
         Button playHiHat = (Button) this.findViewById(R.id.play_hi_hat);
@@ -35,66 +28,43 @@ public class Sound extends AppCompatActivity {
         playbass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bass.isPlaying()){
-                    bass.seekTo(0);
-                }
-                bass.start();
+                soundPlayer.playBass();
             }
         });
         playHiHat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (hiHat.isPlaying()){
-                    hiHat.seekTo(0);
-                }
-                else {
-                    hiHat.start();
-                }
+                soundPlayer.playHiHat();
             }
         });
         playride.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ride.isPlaying()){
-                    ride.seekTo(0);
-                }
-                ride.start();
+                soundPlayer.playRide();
             }
         });
         playsnare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (snare.isPlaying()){
-                    snare.seekTo(0);
-                }
-                snare.start();
+                soundPlayer.playSnare();
             }
         });
         playtom1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tom1.isPlaying()){
-                    tom1.seekTo(0);
-                }
-                tom1.start();
+                soundPlayer.playTom1();
             }
         });
         playtom2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tom2.isPlaying()){
-                    tom2.seekTo(0);
-                }
-                tom2.start();
+                soundPlayer.playTom2();
             }
         });
         playtom3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tom3.isPlaying()){
-                tom3.seekTo(0);
-            }
-                tom3.start();
+                soundPlayer.playTom3();
             }
         });
 
