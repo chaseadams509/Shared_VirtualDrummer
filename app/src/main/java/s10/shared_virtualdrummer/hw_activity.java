@@ -31,7 +31,8 @@ public class hw_activity extends AppCompatActivity {
     private Button offBtn;
     private Button listBtn;
     private TextView statusText;
-    private TextView dataText;
+    private TextView dataText1;
+    private TextView dataText2;
 
     private ListView myListView;
     private ArrayAdapter<String> BTArrayAdapter;
@@ -39,6 +40,10 @@ public class hw_activity extends AppCompatActivity {
     private ArrayList<BluetoothDevice> pairedDevicesArray;
 
     private BluetoothAdapter myBluetoothAdapter;
+    private ConnectThread stick1_connect;
+    private ConnectedThread stick1_maintain;
+    private ConnectThread stick2_connect;
+    private ConnectedThread stick2_maintain;
 
     Handler mHandler = new Handler() {
         @Override
@@ -47,7 +52,6 @@ public class hw_activity extends AppCompatActivity {
             check_msg_connection(msg);
         }
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +77,8 @@ public class hw_activity extends AppCompatActivity {
             statusText.setText("Status: not supported");
         } else {
             statusText = (TextView)findViewById(R.id.status_text);
-            dataText = (TextView)findViewById(R.id.raw_text);
+            dataText1 = (TextView)findViewById(R.id.raw_text);
+            dataText2 = (TextView)findViewById(R.id.raw_text2);
 
             onBtn = (Button)findViewById(R.id.turnOn);
             onBtn.setOnClickListener(new View.OnClickListener() {
@@ -152,25 +157,49 @@ public class hw_activity extends AppCompatActivity {
         statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
 
         BluetoothDevice selectedDevice = pairedDevicesArray.get(pos);
-        ConnectThread connect = new ConnectThread(selectedDevice, mHandler);
-        connect.start();
+        //ConnectThread connect = new ConnectThread(selectedDevice, mHandler);
+        //connect.start();
+        if(stick1_connect == null) {
+            statusText.setText("Status: connecting to (1)" + mDeviceInfo.substring(0, name_end));
+            stick1_connect = new ConnectThread(selectedDevice, mHandler, 1);
+            stick1_connect.start();
+        } else {
+            statusText.setText("Status: connecting to (2)" + mDeviceInfo.substring(0, name_end));
+            stick2_connect = new ConnectThread(selectedDevice, mHandler, 2);
+            stick2_connect.start();
+        }
     }
 
     public void check_msg_connection(Message msg) {
         switch(msg.what) {
-            case StaticVars.SUCCESS_CONNECT:
-                ConnectedThread connectedThread = new ConnectedThread((BluetoothSocket)msg.obj, mHandler);
-                connectedThread.start();
-                statusText.append("-> SUCCESS!");
+            case StaticVars.SUCCESS_CONNECT_1:
+                //ConnectedThread connectedThread = new ConnectedThread((BluetoothSocket)msg.obj, mHandler);
+                //connectedThread.start();
+                stick1_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler, 1);
+                stick1_maintain.start();
+                statusText.append("-> SUCCESS(1)!");
+                break;
+            case StaticVars.SUCCESS_CONNECT_2:
+                //ConnectedThread connectedThread = new ConnectedThread((BluetoothSocket)msg.obj, mHandler);
+                //connectedThread.start();
+                stick2_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler, 2);
+                stick2_maintain.start();
+                statusText.append("-> SUCCESS(2)!");
                 break;
             case StaticVars.FAIL_CONNECT:
                 statusText.append("-> FAILED.");
                 break;
-            case StaticVars.MESSAGE_READ:
+            case StaticVars.MESSAGE_READ_1:
                 byte[] readBuf = (byte[])msg.obj;
                 String s = new String(readBuf);
-                statusText.setText("Status: Reading Data");
-                dataText.setText("Status: Data is " + s);
+                //statusText.setText("Status: Reading Data");
+                dataText1.setText("Status: Data1 is " + s);
+                break;
+            case StaticVars.MESSAGE_READ_2:
+                byte[] readBuf2 = (byte[])msg.obj;
+                String s2 = new String(readBuf2);
+                //statusText.setText("Status: Reading Data");
+                dataText2.setText("Status: Data2 is " + s2);
                 break;
         }
     }
