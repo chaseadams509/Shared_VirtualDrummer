@@ -129,16 +129,16 @@ public class Settings extends AppCompatActivity {
             return true;
         }
         if (id == R.id.action_settings) {
+            /*
             Intent intent = new Intent(Settings.this, Settings.class);
             startActivity(intent);
             return true;
+            */
         }
         if (id == R.id.action_blue_tooth) {
-/*
             Intent intent = new Intent(Settings.this, hw_activity.class);
             startActivity(intent);
             return true;
-            */
         }
 
         return super.onOptionsItemSelected(item);
