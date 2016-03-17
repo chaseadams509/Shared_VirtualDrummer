@@ -303,7 +303,7 @@ public class hw_activity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(hw_activity.this, Menus.class);
+            Intent intent = new Intent(hw_activity.this, Settings.class);
             startActivity(intent);
             return true;
         }
