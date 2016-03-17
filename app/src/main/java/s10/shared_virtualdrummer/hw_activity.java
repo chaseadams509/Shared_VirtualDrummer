@@ -23,6 +23,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Set;
 
 
@@ -45,6 +46,8 @@ public class hw_activity extends AppCompatActivity {
     private ConnectThread stick2_connect;
     private ConnectedThread stick2_maintain;
 
+    private SoundPlayer drumPlayer;
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -57,6 +60,7 @@ public class hw_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hw_activity);
+        drumPlayer = new SoundPlayer(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         /*
@@ -127,13 +131,15 @@ public class hw_activity extends AppCompatActivity {
             BTArrayAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1);
             myListView.setAdapter(BTArrayAdapter);
+            statusText.setText("Status: Enabled");
 
-        }
-        if(!myBluetoothAdapter.isEnabled()) {
-            listBtn.setEnabled(false);
-        }
+            if(!myBluetoothAdapter.isEnabled()) {
+                listBtn.setEnabled(false);
+                statusText.setText("Status: Disconnected");
+            }
 
-        pairedDevicesArray = new ArrayList<BluetoothDevice>();
+            pairedDevicesArray = new ArrayList<BluetoothDevice>();
+        }
     }
 
     public void turn_bt_on(View view){
@@ -147,6 +153,8 @@ public class hw_activity extends AppCompatActivity {
     public void turn_bt_off(View view) {
         myBluetoothAdapter.disable();
         listBtn.setEnabled(false);
+        BTArrayAdapter.clear();
+        destroy_connections();
         statusText.setText("Status: Disconnected");
     }
 
@@ -159,6 +167,25 @@ public class hw_activity extends AppCompatActivity {
         }
     }
 
+    public void destroy_connections() {
+        if(stick1_connect != null) {
+            stick1_connect.cancel();
+            stick1_connect = null;
+        }
+        if(stick1_maintain != null) {
+            stick1_maintain.cancel();
+            stick1_maintain = null;
+        }
+        if(stick2_connect != null) {
+            stick2_connect.cancel();
+            stick2_connect = null;
+        }
+        if(stick2_maintain != null) {
+            stick2_maintain.cancel();
+            stick2_maintain = null;
+        }
+    }
+
     public void connect_dv(AdapterView<?> par, View v, int pos, long id) {
         myBluetoothAdapter.cancelDiscovery();
         String mDeviceInfo = ((TextView) v).getText().toString();
@@ -167,8 +194,6 @@ public class hw_activity extends AppCompatActivity {
         statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
 
         BluetoothDevice selectedDevice = pairedDevicesArray.get(pos);
-        //ConnectThread connect = new ConnectThread(selectedDevice, mHandler);
-        //connect.start();
         if(stick1_connect == null) {
             statusText.setText("Status: connecting to (1)" + mDeviceInfo.substring(0, name_end));
             stick1_connect = new ConnectThread(selectedDevice, mHandler, 1);
@@ -183,35 +208,69 @@ public class hw_activity extends AppCompatActivity {
     public void check_msg_connection(Message msg) {
         switch(msg.what) {
             case StaticVars.SUCCESS_CONNECT_1:
-                //ConnectedThread connectedThread = new ConnectedThread((BluetoothSocket)msg.obj, mHandler);
-                //connectedThread.start();
                 stick1_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler, 1);
                 stick1_maintain.start();
                 statusText.append("-> SUCCESS(1)!");
                 break;
             case StaticVars.SUCCESS_CONNECT_2:
-                //ConnectedThread connectedThread = new ConnectedThread((BluetoothSocket)msg.obj, mHandler);
-                //connectedThread.start();
                 stick2_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler, 2);
                 stick2_maintain.start();
                 statusText.append("-> SUCCESS(2)!");
                 break;
             case StaticVars.FAIL_CONNECT:
                 statusText.append("-> FAILED.");
+                destroy_connections();
                 break;
             case StaticVars.MESSAGE_READ_1:
                 byte[] readBuf = (byte[])msg.obj;
                 String s = new String(readBuf);
-                //statusText.setText("Status: Reading Data");
-                dataText1.setText("Status: Data1 is " + s);
+                //dataText1.setText("Status: Data1 is " + s);
+                process_drum_data(s);
                 break;
             case StaticVars.MESSAGE_READ_2:
                 byte[] readBuf2 = (byte[])msg.obj;
                 String s2 = new String(readBuf2);
-                //statusText.setText("Status: Reading Data");
-                dataText2.setText("Status: Data2 is " + s2);
+                //dataText2.setText("Status: Data2 is " + s2);
+                process_drum_data(s2);
                 break;
         }
+    }
+
+    public void process_drum_data(String data) {
+        //Yaw Pitch Ax Ay Az\n
+        //sscanf(data, "%f %f %f %f %f\n", Yaw, Pitch, Ax, Ay, Az);
+        float Yaw = Float.NaN;
+        float Pitch = Float.NaN;
+        float Ax = Float.NaN;
+        float Ay = Float.NaN;
+        float Az = Float.NaN;
+        Scanner parser = new Scanner(new Scanner(data).nextLine());
+        if(parser.hasNextFloat())
+            Yaw = parser.nextFloat();
+        if(parser.hasNextFloat())
+            Pitch = parser.nextFloat();
+        if(parser.hasNextFloat())
+            Ax = parser.nextFloat();
+        if(parser.hasNextFloat())
+            Ay = parser.nextFloat();
+        if(parser.hasNextFloat())
+            Az = parser.nextFloat();
+        dataText1.setText("Y:" + Yaw + "\nP:" + Pitch +
+                "\nAx:" + Ax +"\nAy:" + Ay + "\nAz:" + Az);
+        /*
+        if(Pitch < -1) {
+            if(Yaw < -35 && Yaw >= -70) {
+                drumPlayer.playSnare();
+            } else if(Yaw < 0 && Yaw >= -35) {
+                drumPlayer.playTom1();
+            } else if(Yaw < 35 && Yaw >= 0) {
+                drumPlayer.playTom2();
+            } else if(Yaw < 70 && Yaw >= 35) {
+                drumPlayer.playTom3();
+            }
+        }
+        */
+
     }
 
     final BroadcastReceiver bReceiver = new BroadcastReceiver() {

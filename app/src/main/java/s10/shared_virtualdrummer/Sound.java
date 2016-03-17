@@ -15,7 +15,7 @@ public class Sound extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
     setContentView(R.layout.sound);
-        final SoundPlayer soundPlayer = new SoundPlayer(this);
+        final SoundPlayer drumPlayer = new SoundPlayer(this);
 
         Button playbass = (Button) this.findViewById(R.id.play_bass);
         Button playHiHat = (Button) this.findViewById(R.id.play_hi_hat);
@@ -28,43 +28,43 @@ public class Sound extends AppCompatActivity {
         playbass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundPlayer.playBass();
+                drumPlayer.playBass();
             }
         });
         playHiHat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundPlayer.playHiHat();
+                drumPlayer.playHiHat();
             }
         });
         playride.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundPlayer.playRide();
+                drumPlayer.playRide();
             }
         });
         playsnare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundPlayer.playSnare();
+                drumPlayer.playSnare();
             }
         });
         playtom1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundPlayer.playTom1();
+                drumPlayer.playTom1();
             }
         });
         playtom2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundPlayer.playTom2();
+                drumPlayer.playTom2();
             }
         });
         playtom3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                soundPlayer.playTom3();
+                drumPlayer.playTom3();
             }
         });
 
