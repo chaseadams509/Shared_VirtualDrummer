@@ -121,13 +121,15 @@ public class hw_activity extends AppCompatActivity {
             BTArrayAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1);
             myListView.setAdapter(BTArrayAdapter);
+            statusText.setText("Status: Enabled");
 
-        }
-        if(!myBluetoothAdapter.isEnabled()) {
-            listBtn.setEnabled(false);
-        }
+            if(!myBluetoothAdapter.isEnabled()) {
+                listBtn.setEnabled(false);
+                statusText.setText("Status: Disconnected");
+            }
 
-        pairedDevicesArray = new ArrayList<BluetoothDevice>();
+            pairedDevicesArray = new ArrayList<BluetoothDevice>();
+        }
     }
 
     public void turn_bt_on(View view){
@@ -141,6 +143,8 @@ public class hw_activity extends AppCompatActivity {
     public void turn_bt_off(View view) {
         myBluetoothAdapter.disable();
         listBtn.setEnabled(false);
+        BTArrayAdapter.clear();
+        destroy_connections();
         statusText.setText("Status: Disconnected");
     }
 
@@ -150,6 +154,25 @@ public class hw_activity extends AppCompatActivity {
         for (BluetoothDevice device : pairedDevices) {
             BTArrayAdapter.add(device.getName() + "\n" + device.getAddress());
             pairedDevicesArray.add(device);
+        }
+    }
+
+    public void destroy_connections() {
+        if(stick1_connect != null) {
+            stick1_connect.cancel();
+            stick1_connect = null;
+        }
+        if(stick1_maintain != null) {
+            stick1_maintain.cancel();
+            stick1_maintain = null;
+        }
+        if(stick2_connect != null) {
+            stick2_connect.cancel();
+            stick2_connect = null;
+        }
+        if(stick2_maintain != null) {
+            stick2_maintain.cancel();
+            stick2_maintain = null;
         }
     }
 
@@ -186,6 +209,7 @@ public class hw_activity extends AppCompatActivity {
                 break;
             case StaticVars.FAIL_CONNECT:
                 statusText.append("-> FAILED.");
+                destroy_connections();
                 break;
             case StaticVars.MESSAGE_READ_1:
                 byte[] readBuf = (byte[])msg.obj;
@@ -205,12 +229,22 @@ public class hw_activity extends AppCompatActivity {
     public void process_drum_data(String data) {
         //Yaw Pitch Ax Ay Az\n
         //sscanf(data, "%f %f %f %f %f\n", Yaw, Pitch, Ax, Ay, Az);
-        Scanner parser = new Scanner(data);
-        float Yaw = parser.nextFloat();
-        float Pitch = parser.nextFloat();
-        float Ax = parser.nextFloat();
-        float Ay = parser.nextFloat();
-        float Az = parser.nextFloat();
+        float Yaw = Float.NaN;
+        float Pitch = Float.NaN;
+        float Ax = Float.NaN;
+        float Ay = Float.NaN;
+        float Az = Float.NaN;
+        Scanner parser = new Scanner(new Scanner(data).nextLine());
+        if(parser.hasNextFloat())
+            Yaw = parser.nextFloat();
+        if(parser.hasNextFloat())
+            Pitch = parser.nextFloat();
+        if(parser.hasNextFloat())
+            Ax = parser.nextFloat();
+        if(parser.hasNextFloat())
+            Ay = parser.nextFloat();
+        if(parser.hasNextFloat())
+            Az = parser.nextFloat();
         dataText1.setText("Y:" + Yaw + "\nP:" + Pitch +
                 "\nAx:" + Ax +"\nAy:" + Ay + "\nAz:" + Az);
         /*
