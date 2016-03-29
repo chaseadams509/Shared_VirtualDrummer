@@ -12,6 +12,7 @@ public class StaticVars {
     public final static UUID uuid_stick2 = UUID.fromString("43d03e51-ead6-11e5-a837-0800200c9a66");
 
     public final static int REQUEST_ENABLE_BT = 1;
+    public final static float AZ_THRES = -1.0f;
 
     public final static int FAIL_CONNECT = -1;
     public final static int SUCCESS_CONNECT_1 = 0;

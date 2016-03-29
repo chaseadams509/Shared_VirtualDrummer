@@ -47,6 +47,7 @@ public class hw_activity extends AppCompatActivity {
     private ConnectedThread stick2_maintain;
 
     private SoundPlayer drumPlayer;
+    private boolean hasPlayed = false;
 
     Handler mHandler = new Handler() {
         @Override
@@ -170,7 +171,7 @@ public class hw_activity extends AppCompatActivity {
     public void connect_dv(AdapterView<?> par, View v, int pos, long id) {
         myBluetoothAdapter.cancelDiscovery();
         String mDeviceInfo = ((TextView) v).getText().toString();
-        String mDeviceAddress = mDeviceInfo.substring(mDeviceInfo.length() - 17);
+        //String mDeviceAddress = mDeviceInfo.substring(mDeviceInfo.length() - 17);
         int name_end = mDeviceInfo.indexOf("\n");
         statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
 
@@ -205,11 +206,10 @@ public class hw_activity extends AppCompatActivity {
             case StaticVars.MESSAGE_READ_1:
                 byte[] readBuf = (byte[])msg.obj;
                 String s = new String(readBuf);
-                statusText.setText("Reading Stick 1");
-                //String s = (String)msg.obj;
-                //dataText1.setText("Status: Data1 is " + s);
                 String r = parse_data(s);
-                process_drum_data(r);
+                if(!r.isEmpty()) {
+                    process_drum_data(r);
+                }
                 break;
             case StaticVars.MESSAGE_READ_2:
                 byte[] readBuf2 = (byte[])msg.obj;
@@ -224,20 +224,23 @@ public class hw_activity extends AppCompatActivity {
     private String leftovers = "";
     public String parse_data(String data) {
         String total_data = leftovers + data;
-        String[] nSplit = total_data.split("\\n", 2);
-        if(!nSplit[1].isEmpty()) {
+        String[] nSplit = total_data.split("\\n");
+        int last = nSplit.length - 1;
+        int curr = nSplit.length - 2;
+        if(last > 0) {
             //Found a newLine
-            leftovers = nSplit[1];
-            String ret = nSplit[0];
-            if(ret.charAt(0) == '@') {
+            leftovers = nSplit[last];
+            String ret = nSplit[curr];
+            if(ret.contains("@")) {
                 //Valid starting
-                Scanner fChecker = new Scanner(data);
+                Scanner fChecker = new Scanner(ret);
                 int count = 0;
+                fChecker.next();
                 while(fChecker.hasNextFloat()) {
-                    float dump = fChecker.nextFloat();
+                    fChecker.nextFloat();
                     count++;
                 }
-                if(count == 5) {
+                if(count == 2) {
                     //perfect number of variables
                     return ret;
                 }
@@ -247,34 +250,42 @@ public class hw_activity extends AppCompatActivity {
 
         } else {
             //Didn't find a newLine yet
-            leftovers = nSplit[0];
+            leftovers = nSplit[last];
             return "";
         }
     }
 
     public void process_drum_data(String data) {
-        //Yaw Pitch Ax Ay Az\n
-        //sscanf(data, "%f %f %f %f %f\n", Yaw, Pitch, Ax, Ay, Az);
         float Yaw = Float.NaN;
+        /*
         float Pitch = Float.NaN;
         float Ax = Float.NaN;
         float Ay = Float.NaN;
+        */
         float Az = Float.NaN;
-        Scanner parser = new Scanner(new Scanner(data).nextLine());
+
+        Scanner parser = new Scanner(data);
+        parser.next(); //remove @ sign
         if(parser.hasNextFloat())
             Yaw = parser.nextFloat();
+        /*
         if(parser.hasNextFloat())
             Pitch = parser.nextFloat();
         if(parser.hasNextFloat())
             Ax = parser.nextFloat();
         if(parser.hasNextFloat())
             Ay = parser.nextFloat();
+        */
         if(parser.hasNextFloat())
             Az = parser.nextFloat();
+        /*
         dataText1.setText("Y:" + Yaw + "\nP:" + Pitch +
                 "\nAx:" + Ax +"\nAy:" + Ay + "\nAz:" + Az);
-        /*
-        if(Pitch < -1) {
+        */
+        dataText1.setText("Y:" + Yaw + "\nAz:" + Az);
+
+
+        if(!hasPlayed && Az < StaticVars.AZ_THRES) {
             if(Yaw < -35 && Yaw >= -70) {
                 drumPlayer.playSnare();
             } else if(Yaw < 0 && Yaw >= -35) {
@@ -284,8 +295,12 @@ public class hw_activity extends AppCompatActivity {
             } else if(Yaw < 70 && Yaw >= 35) {
                 drumPlayer.playTom3();
             }
+            hasPlayed = true;
         }
-        */
+        if(Az > StaticVars.AZ_THRES) {
+            hasPlayed = false;
+        }
+
 
     }
 
