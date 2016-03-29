@@ -205,15 +205,50 @@ public class hw_activity extends AppCompatActivity {
             case StaticVars.MESSAGE_READ_1:
                 byte[] readBuf = (byte[])msg.obj;
                 String s = new String(readBuf);
+                statusText.setText("Reading Stick 1");
+                //String s = (String)msg.obj;
                 //dataText1.setText("Status: Data1 is " + s);
-                process_drum_data(s);
+                String r = parse_data(s);
+                process_drum_data(r);
                 break;
             case StaticVars.MESSAGE_READ_2:
                 byte[] readBuf2 = (byte[])msg.obj;
                 String s2 = new String(readBuf2);
-                //dataText2.setText("Status: Data2 is " + s2);
-                process_drum_data(s2);
+                //String s2 = (String)msg.obj;
+                dataText2.setText("Status: Data2 is " + s2);
+                //process_drum_data(s2);
                 break;
+        }
+    }
+
+    private String leftovers = "";
+    public String parse_data(String data) {
+        String total_data = leftovers + data;
+        String[] nSplit = total_data.split("\\n", 2);
+        if(!nSplit[1].isEmpty()) {
+            //Found a newLine
+            leftovers = nSplit[1];
+            String ret = nSplit[0];
+            if(ret.charAt(0) == '@') {
+                //Valid starting
+                Scanner fChecker = new Scanner(data);
+                int count = 0;
+                while(fChecker.hasNextFloat()) {
+                    float dump = fChecker.nextFloat();
+                    count++;
+                }
+                if(count == 5) {
+                    //perfect number of variables
+                    return ret;
+                }
+            }
+            //Invalid, throw away
+            return "";
+
+        } else {
+            //Didn't find a newLine yet
+            leftovers = nSplit[0];
+            return "";
         }
     }
 
