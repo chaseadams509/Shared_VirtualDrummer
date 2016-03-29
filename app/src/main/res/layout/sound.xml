@@ -69,17 +69,17 @@
         android:text="Tom3"
         android:id="@+id/play_tom3" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rim"
-            android:id="@+id/play_rim" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rim"
+        android:id="@+id/play_rim" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Center"
-            android:id="@+id/play_center" />
-    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Center"
+        android:id="@+id/play_center" />
+</LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -16,7 +16,13 @@ public class Sound extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.sound);
+    Intent get_intent = getIntent();
+    final boolean temp = get_intent.getBooleanExtra("lang", true);
+    if (temp) {
+        setContentView(R.layout.sound);
+    }else{
+        setContentView(R.layout.sound_j);
+    }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final SoundPlayer drumPlayer = new SoundPlayer(this);
@@ -102,6 +108,8 @@ public class Sound extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         //Sound add item selected for menu switching.
         int id = item.getItemId();
+        Intent get_intent = getIntent();
+        final boolean temp = get_intent.getBooleanExtra("lang", true);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
@@ -113,12 +121,14 @@ public class Sound extends AppCompatActivity {
         }
         if (id == R.id.action_settings) {
             Intent intent = new Intent(Sound.this, Settings.class);
+            intent.putExtra("lang", temp);
             startActivity(intent);
             return true;
         }
         if (id == R.id.action_blue_tooth) {
 
             Intent intent = new Intent(Sound.this, hw_activity.class);
+            intent.putExtra("lang", temp);
             startActivity(intent);
             return true;
         }

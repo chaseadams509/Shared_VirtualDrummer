@@ -54,11 +54,13 @@ public class Settings extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         //Sound add item selected for menu switching.
         int id = item.getItemId();
+        Intent get_intent = getIntent();
+        final boolean temp = get_intent.getBooleanExtra("lang", true);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
             Intent intent = new Intent(Settings.this, Sound.class);
-            intent.putExtra("lang", false);
+            intent.putExtra("lang", temp);
             startActivity(intent);
             return true;
         }
@@ -71,6 +73,7 @@ public class Settings extends AppCompatActivity {
         }
         if (id == R.id.action_blue_tooth) {
             Intent intent = new Intent(Settings.this, hw_activity.class);
+            intent.putExtra("lang", temp);
             startActivity(intent);
             return true;
         }

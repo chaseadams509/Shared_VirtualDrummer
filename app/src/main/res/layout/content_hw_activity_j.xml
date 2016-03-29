@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_hw_activity">
+    <TextView
+        android:id="@+id/status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/status_text"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+        <Button
+            android:id="@+id/turnOn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="For thy Emporer"/>
+        <Button
+            android:id="@+id/turnOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="For thy Emporer"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/paired"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="For thy Emporer"/>
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp">
+
+    </ListView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:id="@+id/raw_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="For thy Emporer"/>
+        <TextView
+            android:id="@+id/raw_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="For thy Emporer"/>
+        </LinearLayout>
+
+</LinearLayout>
