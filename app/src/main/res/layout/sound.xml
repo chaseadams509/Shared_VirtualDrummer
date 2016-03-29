@@ -28,21 +28,18 @@
     </android.support.design.widget.AppBarLayout>
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bass"
         android:id="@+id/play_bass" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HiHat"
         android:id="@+id/play_hi_hat" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ride"
@@ -71,6 +68,18 @@
         android:layout_height="wrap_content"
         android:text="Tom3"
         android:id="@+id/play_tom3" />
-</LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rim"
+            android:id="@+id/play_rim" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Center"
+            android:id="@+id/play_center" />
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
