@@ -60,7 +60,14 @@ public class hw_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hw_activity);
+        Intent get_intent = getIntent();
+        final boolean temp = get_intent.getBooleanExtra("lang", true);
+        if (temp) {
+            setContentView(R.layout.activity_hw_activity);
+        }else{
+            setContentView(R.layout.activity_hw_activity_j);
+        }
+        //setContentView(R.layout.activity_hw_activity);
         drumPlayer = new SoundPlayer(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -345,15 +352,19 @@ public class hw_activity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         //Sound add item selected for menu switching.
         int id = item.getItemId();
+        Intent get_intent = getIntent();
+        final boolean temp = get_intent.getBooleanExtra("lang", true);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
             Intent intent = new Intent(hw_activity.this, Sound.class);
+            intent.putExtra("lang", temp);
             startActivity(intent);
             return true;
         }
         if (id == R.id.action_settings) {
             Intent intent = new Intent(hw_activity.this, Settings.class);
+            intent.putExtra("lang", temp);
             startActivity(intent);
             return true;
         }

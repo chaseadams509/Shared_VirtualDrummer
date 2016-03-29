@@ -14,6 +14,8 @@ public class SoundPlayer {
     private MediaPlayer tom1;
     private MediaPlayer tom2;
     private MediaPlayer tom3;
+    private MediaPlayer rim;
+    private MediaPlayer center;
 
     public SoundPlayer(Context con) {
         bass = MediaPlayer.create(con, R.raw.bass);
@@ -23,6 +25,8 @@ public class SoundPlayer {
         tom1 = MediaPlayer.create(con, R.raw.tom1);
         tom2 = MediaPlayer.create(con, R.raw.tom2);
         tom3 = MediaPlayer.create(con, R.raw.tom3);
+        rim  = MediaPlayer.create(con, R.raw.rim);
+        center = MediaPlayer.create(con, R.raw.center);
     }
 
     public void playBass(){
@@ -72,5 +76,17 @@ public class SoundPlayer {
             tom3.seekTo(0);
         }
         tom3.start();
+    }
+    public void playRim(){
+        if (rim.isPlaying()){
+            rim.seekTo(0);
+        }
+        rim.start();
+    }
+    public void playCenter(){
+        if (center.isPlaying()){
+            center.seekTo(0);
+        }
+        center.start();
     }
 }

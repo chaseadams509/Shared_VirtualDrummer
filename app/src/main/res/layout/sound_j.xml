@@ -28,58 +28,62 @@
     </android.support.design.widget.AppBarLayout>
 
     <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bass"
+        android:text="For thy Emporer"
         android:id="@+id/play_bass" />
 
     <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HiHat"
+        android:text="For thy Emporer"
         android:id="@+id/play_hi_hat" />
 
     <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ride"
+        android:text="For thy Emporer"
         android:id="@+id/play_ride" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Snare"
+        android:text="For thy Emporer"
         android:id="@+id/play_snare" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tom1"
+        android:text="For thy Emporer"
         android:id="@+id/play_tom1" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tom2"
+        android:text="For thy Emporer"
         android:id="@+id/play_tom2" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tom3"
+        android:text="For thy Emporer"
         android:id="@+id/play_tom3" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rim"
+        android:text="For thy Emporer"
         android:id="@+id/play_rim" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Center"
+        android:text="For thy Emporer"
         android:id="@+id/play_center" />
+
 </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
