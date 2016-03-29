@@ -64,15 +64,6 @@ public class hw_activity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button soundMenu = (Button) findViewById(R.id.SoundMenu);
-        soundMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(hw_activity.this, Sound.class);
-                startActivity(intent);
-            }
-        });
-
         myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(myBluetoothAdapter == null) {
             onBtn.setEnabled(false);
@@ -341,7 +332,21 @@ public class hw_activity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if (id == R.id.action_play) {
+            Intent intent = new Intent(hw_activity.this, Sound.class);
+            startActivity(intent);
+            return true;
+        }
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(hw_activity.this, Settings.class);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_blue_tooth) {
+            /*
+            Intent intent = new Intent(hw_activity.this, hw_activity.class);
+            startActivity(intent);
+            */
             return true;
         }
 

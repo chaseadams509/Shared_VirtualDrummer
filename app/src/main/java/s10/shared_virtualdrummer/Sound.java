@@ -1,7 +1,9 @@
 package s10.shared_virtualdrummer;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,8 @@ public class Sound extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
     setContentView(R.layout.sound);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         final SoundPlayer drumPlayer = new SoundPlayer(this);
 
         Button playbass = (Button) this.findViewById(R.id.play_bass);
@@ -69,4 +73,43 @@ public class Sound extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_hw_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        //Sound add item selected for menu switching.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_play) {
+           /*
+            Intent intent = new Intent(Sound.this, Sound.class);
+            startActivity(intent);
+            return true;
+            */
+        }
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(Sound.this, Settings.class);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_blue_tooth) {
+
+            Intent intent = new Intent(Sound.this, hw_activity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }
