@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.Set;
 
@@ -17,9 +18,26 @@ public class Settings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings);
+        Intent get_intent = getIntent();
+        final boolean temp = get_intent.getBooleanExtra("lang", true);
+        if (temp) {
+            setContentView(R.layout.settings);
+        }else{
+            setContentView(R.layout.settings_j);
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ImageButton lang_switch = (ImageButton) this.findViewById(R.id.lang_set);
+        lang_switch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean new_temp = !temp;
+                Intent intent = new Intent(Settings.this, Settings.class);
+                intent.putExtra("lang", new_temp);
+                startActivity(intent);
+                return;
+            }
+        });
     }
 
     @Override
@@ -40,6 +58,7 @@ public class Settings extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
             Intent intent = new Intent(Settings.this, Sound.class);
+            intent.putExtra("lang", false);
             startActivity(intent);
             return true;
         }

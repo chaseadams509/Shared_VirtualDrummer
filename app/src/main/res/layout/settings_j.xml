@@ -39,13 +39,13 @@
         <Button
             android:layout_width="250dp"
             android:layout_height="150dp"
-            android:text="Drum Kit"
+            android:text="For thy Emporer"
             android:id="@+id/drum_kit_drum_options" />
 
         <Button
             android:layout_width="250dp"
             android:layout_height="150dp"
-            android:text="Left/Right Handed"
+            android:text="For thy Emporer"
             android:id="@+id/lr_drum_options" />
 
     </LinearLayout>
