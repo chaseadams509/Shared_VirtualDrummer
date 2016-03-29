@@ -31,14 +31,6 @@
                 android:value="s10.shared_virtualdrummer.hw_activity" />
         </activity>
         <activity
-            android:name=".Menus"
-            android:parentActivityName=".hw_activity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="s10.shared_virtualdrummer.hw_activity" />
-        </activity>
-        <activity
             android:name=".Settings"
             android:parentActivityName=".hw_activity"
             android:theme="@style/AppTheme.NoActionBar">

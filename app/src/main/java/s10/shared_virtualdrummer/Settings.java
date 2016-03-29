@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ViewFlipper;
 
 import java.util.Set;
 
@@ -21,91 +20,8 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
- /*       final ViewFlipper viewFlipper = (ViewFlipper) findViewById(R.id.myViewFlipper);
-            //volume
-            /*
-            AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-            int maxVolume = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-            int curVolume = am.getStreamVolume(AudioManager.STREAM_MUSIC);
-            SeekBar volControl = (SeekBar)findViewById(R.id.volume_home);
-            volControl.setMax(maxVolume);
-            volControl.setProgress(curVolume);
-            volControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onStopTrackingTouch(SeekBar arg0) {
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar arg0) {
-                }
-
-                @Override
-                public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
-                    am.setStreamVolume(AudioManager.STREAM_MUSIC, arg1, 0);
-                }
-            });
-            */
-            //home menu
-            //Button set_h = (Button) this.findViewById(R.id.settings_home);
-            //Button drumop_h = (Button) this.findViewById(R.id.drum_options_home);
-            //drum options
-            Button back_do = (Button) this.findViewById(R.id.back_drum_options);
-            Button set_do = (Button) this.findViewById(R.id.settings_drum_options);
-            //settings menu
-            //Button back_s = (Button) this.findViewById(R.id.back_settings);
-         /*
-            set_h.setOnClickListener(new View.OnClickListener()
-
-            {
-                @Override
-                public void onClick (View v){
-                viewFlipper.setDisplayedChild(2);
-            }
-            }
-            );
-            drumop_h.setOnClickListener(new View.OnClickListener()
-/*
-            {
-                @Override
-                public void onClick (View v){
-                viewFlipper.setDisplayedChild(1);
-            }
-            }
-
-            );
-
-            /*
-            back_do.setOnClickListener(new View.OnClickListener()
-
-            {
-                @Override
-                public void onClick (View v){
-                viewFlipper.setDisplayedChild(0);
-            }
-            }
-
-            );
-            set_do.setOnClickListener(new View.OnClickListener()
-
-            {
-                @Override
-                public void onClick (View v){
-                viewFlipper.setDisplayedChild(2);
-            }
-            }
-
-            );
-/*
-            back_s.setOnClickListener(new View.OnClickListener()
-
-            {
-                @Override
-                public void onClick (View v){
-                viewFlipper.setDisplayedChild(0);
-            }
-        });
-        */
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
