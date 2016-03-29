@@ -28,6 +28,8 @@ public class Sound extends AppCompatActivity {
         Button playtom1 = (Button) this.findViewById(R.id.play_tom1);
         Button playtom2 = (Button) this.findViewById(R.id.play_tom2);
         Button playtom3 = (Button) this.findViewById(R.id.play_tom3);
+        Button playrim = (Button) this.findViewById(R.id.play_rim);
+        Button playcenter = (Button) this.findViewById(R.id.play_center);
 
         playbass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +71,18 @@ public class Sound extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 drumPlayer.playTom3();
+            }
+        });
+        playrim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drumPlayer.playRim();
+            }
+        });
+        playcenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drumPlayer.playCenter();
             }
         });
 
