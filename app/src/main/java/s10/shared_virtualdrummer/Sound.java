@@ -98,7 +98,7 @@ public class Sound extends AppCompatActivity {
             */
         }
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(Sound.this, Menus.class);
+            Intent intent = new Intent(Sound.this, Settings.class);
             startActivity(intent);
             return true;
         }

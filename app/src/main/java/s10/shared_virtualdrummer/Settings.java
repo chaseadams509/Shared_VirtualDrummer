@@ -21,7 +21,7 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final ViewFlipper viewFlipper = (ViewFlipper) findViewById(R.id.myViewFlipper);
+ /*       final ViewFlipper viewFlipper = (ViewFlipper) findViewById(R.id.myViewFlipper);
             //volume
             /*
             AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
@@ -53,7 +53,7 @@ public class Settings extends AppCompatActivity {
             Button set_do = (Button) this.findViewById(R.id.settings_drum_options);
             //settings menu
             //Button back_s = (Button) this.findViewById(R.id.back_settings);
-/*
+         /*
             set_h.setOnClickListener(new View.OnClickListener()
 
             {
@@ -64,7 +64,7 @@ public class Settings extends AppCompatActivity {
             }
             );
             drumop_h.setOnClickListener(new View.OnClickListener()
-
+/*
             {
                 @Override
                 public void onClick (View v){
@@ -74,7 +74,7 @@ public class Settings extends AppCompatActivity {
 
             );
 
-            */
+            /*
             back_do.setOnClickListener(new View.OnClickListener()
 
             {
@@ -106,7 +106,6 @@ public class Settings extends AppCompatActivity {
         });
         */
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
