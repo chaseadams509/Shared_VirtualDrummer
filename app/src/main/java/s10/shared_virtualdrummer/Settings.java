@@ -7,10 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+//import android.widget.Button;
 import android.widget.ImageButton;
-
-import java.util.Set;
 
 
 public class Settings extends AppCompatActivity {
@@ -34,7 +32,6 @@ public class Settings extends AppCompatActivity {
                 Intent intent = new Intent(Settings.this, Settings.class);
                 intent.putExtra("lang", !language);
                 startActivity(intent);
-                return;
             }
         });
     }
@@ -63,13 +60,13 @@ public class Settings extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        /*
         if (id == R.id.action_settings) {
-            /*
             Intent intent = new Intent(Settings.this, Settings.class);
             startActivity(intent);
             return true;
-            */
         }
+        */
         if (id == R.id.action_blue_tooth) {
             Intent intent = new Intent(Settings.this, hw_activity.class);
             intent.putExtra("lang", language);

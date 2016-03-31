@@ -1,7 +1,7 @@
 package s10.shared_virtualdrummer;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
+//import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -112,13 +112,13 @@ public class Sound extends AppCompatActivity {
         final boolean language = get_intent.getBooleanExtra("lang", true);
 
         //noinspection SimplifiableIfStatement
+        /*
         if (id == R.id.action_play) {
-           /*
             Intent intent = new Intent(Sound.this, Sound.class);
             startActivity(intent);
             return true;
-            */
         }
+        */
         if (id == R.id.action_settings) {
             Intent intent = new Intent(Sound.this, Settings.class);
             intent.putExtra("lang", language);
