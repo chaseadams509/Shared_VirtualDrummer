@@ -7,4 +7,7 @@
     <string name="on_text">Turn On</string>
     <string name="off_text">Turn Off</string>
     <string name="list_paired">List Paired Devices</string>
+    <string name="action_blue_tooth_j">Japanese Bluetooth</string>
+    <string name="action_play_j">Japanese Play</string>
+    <string name="action_settings_j">Japanese Settings</string>
 </resources>
