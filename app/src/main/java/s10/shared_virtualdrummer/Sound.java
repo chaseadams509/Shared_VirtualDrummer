@@ -110,15 +110,14 @@ public class Sound extends AppCompatActivity {
         int id = item.getItemId();
         Intent get_intent = getIntent();
         final boolean language = get_intent.getBooleanExtra("lang", true);
-
+        /*
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
-           /*
             Intent intent = new Intent(Sound.this, Sound.class);
             startActivity(intent);
             return true;
-            */
         }
+        */
         if (id == R.id.action_settings) {
             Intent intent = new Intent(Sound.this, Settings.class);
             intent.putExtra("lang", language);
