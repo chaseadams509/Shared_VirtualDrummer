@@ -19,8 +19,8 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent get_intent = getIntent();
-        final boolean temp = get_intent.getBooleanExtra("lang", true);
-        if (temp) {
+        final boolean language = get_intent.getBooleanExtra("lang", true);
+        if (language) {
             setContentView(R.layout.settings);
         }else{
             setContentView(R.layout.settings_j);
@@ -31,9 +31,8 @@ public class Settings extends AppCompatActivity {
         lang_switch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean new_temp = !temp;
                 Intent intent = new Intent(Settings.this, Settings.class);
-                intent.putExtra("lang", new_temp);
+                intent.putExtra("lang", !language);
                 startActivity(intent);
                 return;
             }
@@ -55,12 +54,12 @@ public class Settings extends AppCompatActivity {
         //Sound add item selected for menu switching.
         int id = item.getItemId();
         Intent get_intent = getIntent();
-        final boolean temp = get_intent.getBooleanExtra("lang", true);
+        final boolean language = get_intent.getBooleanExtra("lang", true);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
             Intent intent = new Intent(Settings.this, Sound.class);
-            intent.putExtra("lang", temp);
+            intent.putExtra("lang", language);
             startActivity(intent);
             return true;
         }
@@ -73,7 +72,7 @@ public class Settings extends AppCompatActivity {
         }
         if (id == R.id.action_blue_tooth) {
             Intent intent = new Intent(Settings.this, hw_activity.class);
-            intent.putExtra("lang", temp);
+            intent.putExtra("lang", language);
             startActivity(intent);
             return true;
         }

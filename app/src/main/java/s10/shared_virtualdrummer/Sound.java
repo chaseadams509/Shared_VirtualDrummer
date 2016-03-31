@@ -17,8 +17,8 @@ public class Sound extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
     Intent get_intent = getIntent();
-    final boolean temp = get_intent.getBooleanExtra("lang", true);
-    if (temp) {
+    final boolean language = get_intent.getBooleanExtra("lang", true);
+    if (language) {
         setContentView(R.layout.sound);
     }else{
         setContentView(R.layout.sound_j);
@@ -109,7 +109,7 @@ public class Sound extends AppCompatActivity {
         //Sound add item selected for menu switching.
         int id = item.getItemId();
         Intent get_intent = getIntent();
-        final boolean temp = get_intent.getBooleanExtra("lang", true);
+        final boolean language = get_intent.getBooleanExtra("lang", true);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
@@ -121,14 +121,14 @@ public class Sound extends AppCompatActivity {
         }
         if (id == R.id.action_settings) {
             Intent intent = new Intent(Sound.this, Settings.class);
-            intent.putExtra("lang", temp);
+            intent.putExtra("lang", language);
             startActivity(intent);
             return true;
         }
         if (id == R.id.action_blue_tooth) {
 
             Intent intent = new Intent(Sound.this, hw_activity.class);
-            intent.putExtra("lang", temp);
+            intent.putExtra("lang", language);
             startActivity(intent);
             return true;
         }

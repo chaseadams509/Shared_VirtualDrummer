@@ -61,8 +61,8 @@ public class hw_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent get_intent = getIntent();
-        final boolean temp = get_intent.getBooleanExtra("lang", true);
-        if (temp) {
+        final boolean language = get_intent.getBooleanExtra("lang", true);
+        if (language) {
             setContentView(R.layout.activity_hw_activity);
         }else{
             setContentView(R.layout.activity_hw_activity_j);
@@ -353,18 +353,19 @@ public class hw_activity extends AppCompatActivity {
         //Sound add item selected for menu switching.
         int id = item.getItemId();
         Intent get_intent = getIntent();
-        final boolean temp = get_intent.getBooleanExtra("lang", true);
+        final boolean language = get_intent.getBooleanExtra("lang", true);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
             Intent intent = new Intent(hw_activity.this, Sound.class);
-            intent.putExtra("lang", temp);
+            intent.putExtra("lang", language);
+            //intent.putExtra("blue", pairedDevicesArray);
             startActivity(intent);
             return true;
         }
         if (id == R.id.action_settings) {
             Intent intent = new Intent(hw_activity.this, Settings.class);
-            intent.putExtra("lang", temp);
+            intent.putExtra("lang", language);
             startActivity(intent);
             return true;
         }
