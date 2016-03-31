@@ -38,7 +38,13 @@ public class Settings extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_hw_activity, menu);
+        Intent get_intent = getIntent();
+        final boolean language = get_intent.getBooleanExtra("lang", true);
+        if (language) {
+            getMenuInflater().inflate(R.menu.menu_hw_activity, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.menu_hw_activity_j, menu);
+        }
         return true;
     }
 

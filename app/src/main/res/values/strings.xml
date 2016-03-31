@@ -2,9 +2,13 @@
     <string name="app_name">Virtual Drummer</string>
     <string name="action_play">Play</string>
     <string name="action_settings">Settings</string>
-    <string name="action_blue_tooth">Blue Tooth</string>
+    <string name="action_blue_tooth">Bluetooth</string>
     <string name="status_text">Status: -</string>
+    <string name="status_text_j">Japanese Status: -</string>
     <string name="on_text">Turn On</string>
     <string name="off_text">Turn Off</string>
     <string name="list_paired">List Paired Devices</string>
+    <string name="action_blue_tooth_j">Japanese Bluetooth</string>
+    <string name="action_play_j">Japanese Play</string>
+    <string name="action_settings_j">Japanese Settings</string>
 </resources>
