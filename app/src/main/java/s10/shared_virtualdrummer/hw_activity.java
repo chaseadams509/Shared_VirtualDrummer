@@ -41,6 +41,8 @@ public class hw_activity extends AppCompatActivity {
     private ArrayList<BluetoothDevice> pairedDevicesArray;
 
     private BluetoothAdapter myBluetoothAdapter;
+    BluetoothManagerThread BTMan;
+    /*
     private ConnectThread stick1_connect;
     private ConnectedThread stick1_maintain;
     private ConnectThread stick2_connect;
@@ -56,6 +58,7 @@ public class hw_activity extends AppCompatActivity {
             check_msg_connection(msg);
         }
     };
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,7 @@ public class hw_activity extends AppCompatActivity {
             setContentView(R.layout.activity_hw_activity_j);
         }
         //setContentView(R.layout.activity_hw_activity);
-        drumPlayer = new SoundPlayer(this);
+        //drumPlayer = new SoundPlayer(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -143,7 +146,8 @@ public class hw_activity extends AppCompatActivity {
         myBluetoothAdapter.disable();
         listBtn.setEnabled(false);
         BTArrayAdapter.clear();
-        destroy_connections();
+        //destroy_connections();
+        BTMan.cancel();
         statusText.setText("Status: Disconnected");
     }
 
@@ -156,6 +160,7 @@ public class hw_activity extends AppCompatActivity {
         }
     }
 
+    /*
     public void destroy_connections() {
         if(stick1_connect != null) {
             stick1_connect.cancel();
@@ -174,15 +179,19 @@ public class hw_activity extends AppCompatActivity {
             stick2_maintain = null;
         }
     }
+    */
 
     public void connect_dv(AdapterView<?> par, View v, int pos, long id) {
         myBluetoothAdapter.cancelDiscovery();
         String mDeviceInfo = ((TextView) v).getText().toString();
         //String mDeviceAddress = mDeviceInfo.substring(mDeviceInfo.length() - 17);
         int name_end = mDeviceInfo.indexOf("\n");
-        statusText.setText("Status: connecting to " + mDeviceInfo.substring(0, name_end));
+        statusText.setText("Status: connect to " + mDeviceInfo.substring(0, name_end));
 
         BluetoothDevice selectedDevice = pairedDevicesArray.get(pos);
+        BTMan = new BluetoothManagerThread(this, selectedDevice, selectedDevice);
+        BTMan.start();
+        /*
         if(stick1_connect == null) {
             statusText.setText("Status: connecting to (1)" + mDeviceInfo.substring(0, name_end));
             stick1_connect = new ConnectThread(selectedDevice, mHandler, 1);
@@ -192,8 +201,10 @@ public class hw_activity extends AppCompatActivity {
             stick2_connect = new ConnectThread(selectedDevice, mHandler, 2);
             stick2_connect.start();
         }
+        */
     }
 
+    /*
     public void check_msg_connection(Message msg) {
         switch(msg.what) {
             case StaticVars.SUCCESS_CONNECT_1:
@@ -264,31 +275,14 @@ public class hw_activity extends AppCompatActivity {
 
     public void process_drum_data(String data) {
         float Yaw = Float.NaN;
-        /*
-        float Pitch = Float.NaN;
-        float Ax = Float.NaN;
-        float Ay = Float.NaN;
-        */
         float Az = Float.NaN;
 
         Scanner parser = new Scanner(data);
         parser.next(); //remove @ sign
         if(parser.hasNextFloat())
             Yaw = parser.nextFloat();
-        /*
-        if(parser.hasNextFloat())
-            Pitch = parser.nextFloat();
-        if(parser.hasNextFloat())
-            Ax = parser.nextFloat();
-        if(parser.hasNextFloat())
-            Ay = parser.nextFloat();
-        */
         if(parser.hasNextFloat())
             Az = parser.nextFloat();
-        /*
-        dataText1.setText("Y:" + Yaw + "\nP:" + Pitch +
-                "\nAx:" + Ax +"\nAy:" + Ay + "\nAz:" + Az);
-        */
         dataText1.setText("Y:" + Yaw + "\nAz:" + Az);
 
 
@@ -310,6 +304,8 @@ public class hw_activity extends AppCompatActivity {
 
 
     }
+    */
+
 
     final BroadcastReceiver bReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
