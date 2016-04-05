@@ -50,14 +50,14 @@
         <Button
             android:layout_width="250dp"
             android:layout_height="150dp"
-            android:text="ドラムキットのオプション"
+            android:text="@string/drum_kit_j"
             android:id="@+id/drum_kit_drum_options"
             android:layout_gravity="center"/>
 
         <Button
             android:layout_width="250dp"
             android:layout_height="150dp"
-            android:text="左または右利き"
+            android:text="@string/handedness_j"
             android:id="@+id/lr_drum_options"
             android:layout_gravity="center"/>
 
