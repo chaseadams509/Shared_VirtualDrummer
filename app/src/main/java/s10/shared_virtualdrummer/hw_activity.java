@@ -250,7 +250,7 @@ public class hw_activity extends AppCompatActivity {
             String ret = nSplit[curr];
             dataText1.setText("Val:" + ret + "\n");
             if(ret.contains("@")) {
-                //Valid startin
+                //Valid starting
                 ret = ret.replaceAll("[@\\s]", "");
                 try {
                     if(Float.parseFloat(ret) != Float.NaN) {
@@ -259,20 +259,6 @@ public class hw_activity extends AppCompatActivity {
                 } catch (NumberFormatException e) {
                     return "";
                 }
-                /*
-                Scanner fChecker = new Scanner(ret);
-                int count = 0;
-                fChecker.next();
-                while(fChecker.hasNextFloat()) {
-                    fChecker.nextFloat();
-                    count++;
-                }
-                if(count == 2) {
-                    //perfect number of variables
-                    return ret;
-                }
-                */
-
             }
             //Invalid, throw away
             return "";
@@ -285,22 +271,9 @@ public class hw_activity extends AppCompatActivity {
     }
 
     public void process_drum_data(String data) {
-        float Yaw = Float.NaN;
-        //float Az = Float.NaN;
-
-        /*
-        Scanner parser = new Scanner(data);
-        parser.next(); //remove @ sign
-        if(parser.hasNextFloat())
-            Yaw = parser.nextFloat();
-        if(parser.hasNextFloat())
-            Az = parser.nextFloat();
-        dataText1.setText("Y:" + Yaw + "\nAz:" + Az);
-        */
-        Yaw = Float.parseFloat(data);
+        float Yaw = Float.parseFloat(data);
         dataText1.append("Y:" + Yaw);
 
-//        if(!hasPlayed && Az < StaticVars.AZ_THRES) {
             if(Yaw < -35 && Yaw >= -70) {
                 drumPlayer.playSnare();
             } else if(Yaw < 0 && Yaw >= -35) {
@@ -312,11 +285,7 @@ public class hw_activity extends AppCompatActivity {
             } else {
                 drumPlayer.playRide();
             }
-//            hasPlayed = true;
-//        }
-//        if(Az > StaticVars.AZ_THRES) {
-//            hasPlayed = false;
-//        }
+
 
 
     }
