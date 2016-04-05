@@ -22,18 +22,18 @@
             android:id="@+id/turnOn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="For thy Emporer"/>
+            android:text="@string/on_text_j"/>
         <Button
             android:id="@+id/turnOff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="For thy Emporer"/>
+            android:text="@string/off_text_j"/>
     </LinearLayout>
     <Button
         android:id="@+id/paired"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="For thy Emporer"/>
+        android:text="@string/list_paired_j"/>
     <ListView
         android:id="@+id/listView1"
         android:layout_width="wrap_content"

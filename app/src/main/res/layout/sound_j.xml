@@ -31,7 +31,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="For thy Emporer"
+        android:text="ベース"
         android:id="@+id/play_bass"
         android:layout_gravity="center" />
 
@@ -39,7 +39,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="For thy Emporer"
+        android:text="ハイハット"
         android:id="@+id/play_hi_hat"
         android:layout_gravity="center" />
 
@@ -47,49 +47,49 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="For thy Emporer"
+        android:text="ライド"
         android:id="@+id/play_ride"
         android:layout_gravity="center"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="For thy Emporer"
+        android:text="スネア"
         android:id="@+id/play_snare"
         android:layout_gravity="center"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="For thy Emporer"
+        android:text="トム2"
         android:id="@+id/play_tom1"
         android:layout_gravity="center"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="For thy Emporer"
+        android:text="トム2"
         android:id="@+id/play_tom2"
         android:layout_gravity="center"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="For thy Emporer"
+        android:text="トム3"
         android:id="@+id/play_tom3"
         android:layout_gravity="center"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="For thy Emporer"
+        android:text="リム"
         android:id="@+id/play_rim"
         android:layout_gravity="center"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="For thy Emporer"
+        android:text="センター"
         android:id="@+id/play_center"
         android:layout_gravity="center"/>
 
