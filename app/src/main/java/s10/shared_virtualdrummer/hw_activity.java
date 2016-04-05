@@ -23,7 +23,6 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Set;
 
 
@@ -69,7 +68,6 @@ public class hw_activity extends AppCompatActivity {
         }else{
             setContentView(R.layout.activity_hw_activity_j);
         }
-        //setContentView(R.layout.activity_hw_activity);
         drumPlayer = new SoundPlayer(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -357,13 +355,13 @@ public class hw_activity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        /*
         if (id == R.id.action_blue_tooth) {
-            /*
             Intent intent = new Intent(hw_activity.this, hw_activity.class);
             startActivity(intent);
-            */
             return true;
         }
+        */
 
         return super.onOptionsItemSelected(item);
     }
