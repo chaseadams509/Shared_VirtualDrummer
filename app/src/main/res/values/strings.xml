@@ -8,8 +8,10 @@
     <string name="on_text">Turn On</string>
     <string name="off_text">Turn Off</string>
     <string name="list_paired">List Paired Devices</string>
-    <string name="drum_kit">Drum Kit</string>
-    <string name="handedness">Left/Right Handed</string>
+    <string name="set_kit">Rock Kit</string>
+    <string name="set_taiko">Taiko</string>
+    <string name="set_lefthand">Left Handed</string>
+    <string name="set_righthand">Right Handed</string>
     <string name="drum_bass">Bass</string>
     <string name="drum_hihat">HiHat</string>
     <string name="drum_ride">Ride</string>
@@ -20,14 +22,16 @@
     <string name="drum_taiko_rim">Taiko Rim</string>
     <string name="drum_taiko_center">Taiko Center</string>
 
-    <string name="action_play_j">遊びます</string>
+    <string name="action_play_j">遊ぶ</string>
     <string name="action_settings_j">設定</string>
     <string name="action_blue_tooth_j">ブルートゥース</string>
-    <string name="on_text_j">オンにする</string>
-    <string name="off_text_j">消す</string>
-    <string name="list_paired_j">リスト登録済みデバイス</string>
-    <string name="drum_kit_j">ドラムキットのオプション</string>
-    <string name="handedness_j">左または右利き</string>
+    <string name="on_text_j">つく</string>
+    <string name="off_text_j">消える</string>
+    <string name="list_paired_j">登録済みブルートゥース機器</string>
+    <string name="set_kit_j">ロックキット</string>
+    <string name="set_taiko_j">太鼓</string>
+    <string name="set_lefthand_j">左利き</string>
+    <string name="set_righthand_j">右利き</string>
     <string name="drum_bass_j">ベース</string>
     <string name="drum_hihat_j">ハイハット</string>
     <string name="drum_ride_j">ライド</string>

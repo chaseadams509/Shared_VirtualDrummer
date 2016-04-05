@@ -61,13 +61,13 @@
             <Button
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:text="太鼓"
+                android:text="@string/set_taiko_j"
                 android:id="@+id/Taiko"
                 android:layout_gravity="center" />
             <Button
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:text="ロックキット"
+                android:text="@string/set_kit_j"
                 android:id="@+id/Rock_Kit"
                 android:layout_gravity="center"
                 android:backgroundTint="#0619bf"
@@ -83,14 +83,14 @@
             <Button
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:text="左利き"
+                android:text="@string/set_lefthand_j"
                 android:id="@+id/left_handed"
                 android:layout_gravity="center" />
 
             <Button
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:text="右利き"
+                android:text="@string/set_righthand_j"
                 android:id="@+id/right_handed"
                 android:layout_gravity="center"
                 android:backgroundTint="#0619bf"

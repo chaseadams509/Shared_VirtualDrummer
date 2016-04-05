@@ -61,13 +61,13 @@
         <Button
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:text="Taiko"
+            android:text="@string/set_taiko"
             android:id="@+id/Taiko"
             android:layout_gravity="center" />
         <Button
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:text="Rock Kit"
+            android:text="@string/set_kit"
             android:id="@+id/Rock_Kit"
             android:layout_gravity="center"
             android:backgroundTint="#0619bf"
@@ -83,14 +83,14 @@
         <Button
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:text="Left Handed"
+            android:text="@string/set_lefthand"
             android:id="@+id/left_handed"
             android:layout_gravity="center" />
 
         <Button
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:text="Right Handed"
+            android:text="@string/set_righthand"
             android:id="@+id/right_handed"
             android:layout_gravity="center"
             android:backgroundTint="#0619bf"
