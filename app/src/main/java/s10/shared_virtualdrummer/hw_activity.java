@@ -202,12 +202,14 @@ public class hw_activity extends AppCompatActivity {
     public void check_msg_connection(Message msg) {
         switch(msg.what) {
             case StaticVars.SUCCESS_CONNECT_1:
-                stick1_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler, 1);
+//                stick1_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler, 1);
+                stick1_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler);
                 stick1_maintain.start();
                 statusText.append("-> SUCCESS(1)!");
                 break;
             case StaticVars.SUCCESS_CONNECT_2:
-                stick2_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler, 2);
+//                stick2_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler, 2);
+                stick2_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler);
                 stick2_maintain.start();
                 statusText.append("-> SUCCESS(2)!");
                 break;
@@ -215,7 +217,15 @@ public class hw_activity extends AppCompatActivity {
                 statusText.append("-> FAILED.");
                 destroy_connections();
                 break;
-
+            case StaticVars.MESSAGE_READ:
+                byte[] readBuf = (byte[])msg.obj;
+                String s = new String(readBuf);
+                String r = parse_data(s);
+                if(!r.isEmpty()) {
+                    process_drum_data(r);
+                }
+                break;
+/*
             case StaticVars.MESSAGE_READ_1:
                 byte[] readBuf = (byte[])msg.obj;
                 String s = new String(readBuf);
@@ -227,10 +237,18 @@ public class hw_activity extends AppCompatActivity {
             case StaticVars.MESSAGE_READ_2:
                 byte[] readBuf2 = (byte[])msg.obj;
                 String s2 = new String(readBuf2);
+                String r2 = parse_data(s2);
+                if(!r2.isEmpty()) {
+                    process_drum_data(r2);
+                }
+
+                //String s2 = new String(readBuf2);
                 //String s2 = (String)msg.obj;
-                dataText2.setText("Status: Data2 is " + s2);
+                //dataText2.setText("Status: Data2 is " + s2);
                 //process_drum_data(s2);
+
                 break;
+*/
 
         }
     }
