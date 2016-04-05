@@ -41,8 +41,7 @@ public class hw_activity extends AppCompatActivity {
     private ArrayList<BluetoothDevice> pairedDevicesArray;
 
     private BluetoothAdapter myBluetoothAdapter;
-    BluetoothManagerThread BTMan;
-    /*
+
     private ConnectThread stick1_connect;
     private ConnectedThread stick1_maintain;
     private ConnectThread stick2_connect;
@@ -58,7 +57,7 @@ public class hw_activity extends AppCompatActivity {
             check_msg_connection(msg);
         }
     };
-    */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +69,8 @@ public class hw_activity extends AppCompatActivity {
         }else{
             setContentView(R.layout.activity_hw_activity_j);
         }
-        //setContentView(R.layout.activity_hw_activity);
-        //drumPlayer = new SoundPlayer(this);
+        setContentView(R.layout.activity_hw_activity);
+        drumPlayer = new SoundPlayer(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -146,8 +145,7 @@ public class hw_activity extends AppCompatActivity {
         myBluetoothAdapter.disable();
         listBtn.setEnabled(false);
         BTArrayAdapter.clear();
-        //destroy_connections();
-        BTMan.cancel();
+        destroy_connections();
         statusText.setText("Status: Disconnected");
     }
 
@@ -160,7 +158,7 @@ public class hw_activity extends AppCompatActivity {
         }
     }
 
-    /*
+
     public void destroy_connections() {
         if(stick1_connect != null) {
             stick1_connect.cancel();
@@ -179,7 +177,7 @@ public class hw_activity extends AppCompatActivity {
             stick2_maintain = null;
         }
     }
-    */
+
 
     public void connect_dv(AdapterView<?> par, View v, int pos, long id) {
         myBluetoothAdapter.cancelDiscovery();
@@ -189,9 +187,7 @@ public class hw_activity extends AppCompatActivity {
         statusText.setText("Status: connect to " + mDeviceInfo.substring(0, name_end));
 
         BluetoothDevice selectedDevice = pairedDevicesArray.get(pos);
-        BTMan = new BluetoothManagerThread(this, selectedDevice, selectedDevice);
-        BTMan.start();
-        /*
+
         if(stick1_connect == null) {
             statusText.setText("Status: connecting to (1)" + mDeviceInfo.substring(0, name_end));
             stick1_connect = new ConnectThread(selectedDevice, mHandler, 1);
@@ -201,10 +197,10 @@ public class hw_activity extends AppCompatActivity {
             stick2_connect = new ConnectThread(selectedDevice, mHandler, 2);
             stick2_connect.start();
         }
-        */
+
     }
 
-    /*
+
     public void check_msg_connection(Message msg) {
         switch(msg.what) {
             case StaticVars.SUCCESS_CONNECT_1:
@@ -221,6 +217,7 @@ public class hw_activity extends AppCompatActivity {
                 statusText.append("-> FAILED.");
                 destroy_connections();
                 break;
+
             case StaticVars.MESSAGE_READ_1:
                 byte[] readBuf = (byte[])msg.obj;
                 String s = new String(readBuf);
@@ -236,8 +233,10 @@ public class hw_activity extends AppCompatActivity {
                 dataText2.setText("Status: Data2 is " + s2);
                 //process_drum_data(s2);
                 break;
+
         }
     }
+
 
     private String leftovers = "";
     public String parse_data(String data) {
@@ -304,7 +303,8 @@ public class hw_activity extends AppCompatActivity {
 
 
     }
-    */
+
+
 
 
     final BroadcastReceiver bReceiver = new BroadcastReceiver() {
