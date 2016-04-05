@@ -69,7 +69,7 @@ public class hw_activity extends AppCompatActivity {
         }else{
             setContentView(R.layout.activity_hw_activity_j);
         }
-        setContentView(R.layout.activity_hw_activity);
+        //setContentView(R.layout.activity_hw_activity);
         drumPlayer = new SoundPlayer(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
