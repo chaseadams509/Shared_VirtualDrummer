@@ -248,8 +248,18 @@ public class hw_activity extends AppCompatActivity {
             //Found a newLine
             leftovers = nSplit[last];
             String ret = nSplit[curr];
+            dataText1.setText("Val:" + ret + "\n");
             if(ret.contains("@")) {
-                //Valid starting
+                //Valid startin
+                ret = ret.replaceAll("[@\\s]", "");
+                try {
+                    if(Float.parseFloat(ret) != Float.NaN) {
+                        return ret;
+                    }
+                } catch (NumberFormatException e) {
+                    return "";
+                }
+                /*
                 Scanner fChecker = new Scanner(ret);
                 int count = 0;
                 fChecker.next();
@@ -261,6 +271,8 @@ public class hw_activity extends AppCompatActivity {
                     //perfect number of variables
                     return ret;
                 }
+                */
+
             }
             //Invalid, throw away
             return "";
@@ -274,8 +286,9 @@ public class hw_activity extends AppCompatActivity {
 
     public void process_drum_data(String data) {
         float Yaw = Float.NaN;
-        float Az = Float.NaN;
+        //float Az = Float.NaN;
 
+        /*
         Scanner parser = new Scanner(data);
         parser.next(); //remove @ sign
         if(parser.hasNextFloat())
@@ -283,9 +296,11 @@ public class hw_activity extends AppCompatActivity {
         if(parser.hasNextFloat())
             Az = parser.nextFloat();
         dataText1.setText("Y:" + Yaw + "\nAz:" + Az);
+        */
+        Yaw = Float.parseFloat(data);
+        dataText1.append("Y:" + Yaw);
 
-
-        if(!hasPlayed && Az < StaticVars.AZ_THRES) {
+//        if(!hasPlayed && Az < StaticVars.AZ_THRES) {
             if(Yaw < -35 && Yaw >= -70) {
                 drumPlayer.playSnare();
             } else if(Yaw < 0 && Yaw >= -35) {
@@ -294,12 +309,14 @@ public class hw_activity extends AppCompatActivity {
                 drumPlayer.playTom2();
             } else if(Yaw < 70 && Yaw >= 35) {
                 drumPlayer.playTom3();
+            } else {
+                drumPlayer.playRide();
             }
-            hasPlayed = true;
-        }
-        if(Az > StaticVars.AZ_THRES) {
-            hasPlayed = false;
-        }
+//            hasPlayed = true;
+//        }
+//        if(Az > StaticVars.AZ_THRES) {
+//            hasPlayed = false;
+//        }
 
 
     }
