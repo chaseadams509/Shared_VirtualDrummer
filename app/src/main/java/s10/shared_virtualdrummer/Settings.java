@@ -51,6 +51,7 @@ public class Settings extends AppCompatActivity {
                 intent.putExtra("lang", !language);
                 intent.putExtra("drum", drumset);
                 intent.putExtra("hand", handed);
+                finish();
                 startActivity(intent);
             }
         });
@@ -62,6 +63,7 @@ public class Settings extends AppCompatActivity {
                     intent.putExtra("drum", false);
                     intent.putExtra("lang", language);
                     intent.putExtra("hand", handed);
+                    finish();
                     startActivity(intent);
                 }
             }
@@ -74,6 +76,7 @@ public class Settings extends AppCompatActivity {
                     intent.putExtra("drum", true);
                     intent.putExtra("lang", language);
                     intent.putExtra("hand", handed);
+                    finish();
                     startActivity(intent);
                 }
             }
@@ -86,6 +89,7 @@ public class Settings extends AppCompatActivity {
                     intent.putExtra("hand", false);
                     intent.putExtra("lang", language);
                     intent.putExtra("drum", drumset);
+                    finish();
                     startActivity(intent);
                 }
             }
@@ -98,6 +102,7 @@ public class Settings extends AppCompatActivity {
                     intent.putExtra("hand", true);
                     intent.putExtra("lang", language);
                     intent.putExtra("drum", drumset);
+                    finish();
                     startActivity(intent);
                 }
             }
