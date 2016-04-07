@@ -22,14 +22,14 @@
     <string name="drum_taiko_rim">Taiko Rim</string>
     <string name="drum_taiko_center">Taiko Center</string>
 
-    <string name="action_play_j">遊ぶ</string>
+    <string name="action_play_j">プレイ</string>
     <string name="action_settings_j">設定</string>
     <string name="action_blue_tooth_j">ブルートゥース</string>
-    <string name="on_text_j">つく</string>
-    <string name="off_text_j">消える</string>
+    <string name="on_text_j">スタート</string>
+    <string name="off_text_j">終了</string>
     <string name="list_paired_j">登録済みブルートゥース機器</string>
     <string name="set_kit_j">ロックキット</string>
-    <string name="set_taiko_j">太鼓</string>
+    <string name="set_taiko_j">和太鼓</string>
     <string name="set_lefthand_j">左利き</string>
     <string name="set_righthand_j">右利き</string>
     <string name="drum_bass_j">ベース</string>
@@ -39,6 +39,6 @@
     <string name="drum_tom1_j">トム1</string>
     <string name="drum_tom2_j">トム2</string>
     <string name="drum_tom3_j">トム3</string>
-    <string name="drum_taiko_rim_j">リム</string>
-    <string name="drum_taiko_center_j">センター</string>
+    <string name="drum_taiko_rim_j">ふち</string>
+    <string name="drum_taiko_center_j">中央</string>
 </resources>

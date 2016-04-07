@@ -68,7 +68,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/drum_tom3_j"
+        android:text="@string/drum_tom2_j"
         android:id="@+id/play_tom2"
         android:layout_gravity="center"/>
 

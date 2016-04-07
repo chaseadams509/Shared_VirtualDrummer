@@ -47,8 +47,8 @@ public class hw_activity extends AppCompatActivity {
     private ConnectedThread stick2_maintain;
 
     private SoundPlayer drumPlayer;
-    //private boolean kitType = true;
-    //private boolean rightHand = true;
+    private boolean kitType = true;
+    private boolean rightHand = true;
 
     Handler mHandler = new Handler() {
         @Override
@@ -69,8 +69,8 @@ public class hw_activity extends AppCompatActivity {
         }else{
             setContentView(R.layout.activity_hw_activity_j);
         }
-        //kitType = get_intent.getBooleanExtra("drum", true);
-        //rightHand = get_intent.getBooleanExtra("hand", true);
+        kitType = get_intent.getBooleanExtra("drum", true);
+        rightHand = get_intent.getBooleanExtra("hand", true);
         drumPlayer = new SoundPlayer(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -123,7 +123,7 @@ public class hw_activity extends AppCompatActivity {
             BTArrayAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1);
             myListView.setAdapter(BTArrayAdapter);
-            statusText.setText("Status: Enabled"); // + kitType + " " + rightHand);
+            statusText.setText("Status: Enabled D:" + kitType + " H:" + rightHand);
 
             if(!myBluetoothAdapter.isEnabled()) {
                 listBtn.setEnabled(false);
@@ -296,8 +296,9 @@ public class hw_activity extends AppCompatActivity {
         float Yaw = Float.parseFloat(data);
         dataText1.append("Y:" + Yaw);
         Intent get_intent = getIntent();
-        final boolean kitType = get_intent.getBooleanExtra("drum", true);
-        final boolean rightHand = get_intent.getBooleanExtra("hand", true);
+        //final boolean kitType = get_intent.getBooleanExtra("drum", true);
+        //final boolean rightHand = get_intent.getBooleanExtra("hand", true);
+        statusText.setText("Status: Playing D:" + kitType + " H:" + rightHand);
 
         if(kitType) {
             //Normal Drum Kit
@@ -305,6 +306,7 @@ public class hw_activity extends AppCompatActivity {
                 //Left Handed, invert everything
                 Yaw = -1 * Yaw;
             }
+
             if (Yaw < -35 && Yaw >= -70) {
                 drumPlayer.playSnare();
             } else if (Yaw < 0 && Yaw >= -35) {
@@ -379,6 +381,7 @@ public class hw_activity extends AppCompatActivity {
         final boolean language = get_intent.getBooleanExtra("lang", true);
         final boolean drum = get_intent.getBooleanExtra("drum", true);
         final boolean hand = get_intent.getBooleanExtra("hand", true);
+
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
