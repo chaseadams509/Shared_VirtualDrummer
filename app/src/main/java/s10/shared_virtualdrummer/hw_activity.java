@@ -123,7 +123,7 @@ public class hw_activity extends AppCompatActivity {
             BTArrayAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1);
             myListView.setAdapter(BTArrayAdapter);
-            statusText.setText("Status: Enabled");
+            statusText.setText("Status: Enabled" + kitType + " " + rightHand);
 
             if(!myBluetoothAdapter.isEnabled()) {
                 listBtn.setEnabled(false);
