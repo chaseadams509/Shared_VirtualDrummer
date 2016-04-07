@@ -47,7 +47,8 @@ public class hw_activity extends AppCompatActivity {
     private ConnectedThread stick2_maintain;
 
     private SoundPlayer drumPlayer;
-    private boolean hasPlayed = false;
+    private boolean kitType = true;
+    private boolean rightHand = true;
 
     Handler mHandler = new Handler() {
         @Override
@@ -68,6 +69,8 @@ public class hw_activity extends AppCompatActivity {
         }else{
             setContentView(R.layout.activity_hw_activity_j);
         }
+        kitType = get_intent.getBooleanExtra("drum", true);
+        rightHand = get_intent.getBooleanExtra("hand", true);
         drumPlayer = new SoundPlayer(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -253,7 +256,6 @@ public class hw_activity extends AppCompatActivity {
         }
     }
 
-
     private String leftovers = "";
     public String parse_data(String data) {
         String total_data = leftovers + data;
@@ -270,18 +272,22 @@ public class hw_activity extends AppCompatActivity {
                 ret = ret.replaceAll("[@\\s]", "");
                 try {
                     if(Float.parseFloat(ret) != Float.NaN) {
+                        dataText2.setText("Found Sound Float!\n");
                         return ret;
                     }
                 } catch (NumberFormatException e) {
+                    dataText2.setText("FAIL: caught error!\n");
                     return "";
                 }
             }
             //Invalid, throw away
+            dataText2.setText("FAIL: Invalid @!\n");
             return "";
 
         } else {
             //Didn't find a newLine yet
             leftovers = nSplit[last];
+            dataText2.setText("FAIL: No newline!\n");
             return "";
         }
     }
@@ -290,22 +296,32 @@ public class hw_activity extends AppCompatActivity {
         float Yaw = Float.parseFloat(data);
         dataText1.append("Y:" + Yaw);
 
-            if(Yaw < -35 && Yaw >= -70) {
+        if(kitType) {
+            //Normal Drum Kit
+            if(!rightHand) {
+                //Left Handed, invert everything
+                Yaw = -1 * Yaw;
+            }
+            if (Yaw < -35 && Yaw >= -70) {
                 drumPlayer.playSnare();
-            } else if(Yaw < 0 && Yaw >= -35) {
+            } else if (Yaw < 0 && Yaw >= -35) {
                 drumPlayer.playTom1();
-            } else if(Yaw < 35 && Yaw >= 0) {
+            } else if (Yaw < 35 && Yaw >= 0) {
                 drumPlayer.playTom2();
-            } else if(Yaw < 70 && Yaw >= 35) {
+            } else if (Yaw < 70 && Yaw >= 35) {
                 drumPlayer.playTom3();
             } else {
                 drumPlayer.playRide();
             }
-
-
-
+        } else {
+            //Taiko Drum
+            if (Yaw < 35 && Yaw > -35) {
+                drumPlayer.playCenter();
+            } else {
+                drumPlayer.playRim();
+            }
+        }
     }
-
 
 
 
