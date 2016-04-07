@@ -57,41 +57,49 @@ public class Settings extends AppCompatActivity {
         taiko_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Settings.this, Settings.class);
-                intent.putExtra("drum", false);
-                intent.putExtra("lang", language);
-                intent.putExtra("hand", handed);
-                startActivity(intent);
+                if(drumset) {
+                    Intent intent = new Intent(Settings.this, Settings.class);
+                    intent.putExtra("drum", false);
+                    intent.putExtra("lang", language);
+                    intent.putExtra("hand", handed);
+                    startActivity(intent);
+                }
             }
         });
         rock_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Settings.this, Settings.class);
-                intent.putExtra("drum", true);
-                intent.putExtra("lang", language);
-                intent.putExtra("hand", handed);
-                startActivity(intent);
+                if(!drumset) {
+                    Intent intent = new Intent(Settings.this, Settings.class);
+                    intent.putExtra("drum", true);
+                    intent.putExtra("lang", language);
+                    intent.putExtra("hand", handed);
+                    startActivity(intent);
+                }
             }
         });
         left_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Settings.this, Settings.class);
-                intent.putExtra("hand", false);
-                intent.putExtra("lang", language);
-                intent.putExtra("drum", drumset);
-                startActivity(intent);
+                if(handed) {
+                    Intent intent = new Intent(Settings.this, Settings.class);
+                    intent.putExtra("hand", false);
+                    intent.putExtra("lang", language);
+                    intent.putExtra("drum", drumset);
+                    startActivity(intent);
+                }
             }
         });
         right_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Settings.this, Settings.class);
-                intent.putExtra("hand", true);
-                intent.putExtra("lang", language);
-                intent.putExtra("drum", drumset);
-                startActivity(intent);
+                if(!handed) {
+                    Intent intent = new Intent(Settings.this, Settings.class);
+                    intent.putExtra("hand", true);
+                    intent.putExtra("lang", language);
+                    intent.putExtra("drum", drumset);
+                    startActivity(intent);
+                }
             }
         });
     }
