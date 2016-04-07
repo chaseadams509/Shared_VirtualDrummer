@@ -116,6 +116,8 @@ public class Sound extends AppCompatActivity {
         int id = item.getItemId();
         Intent get_intent = getIntent();
         final boolean language = get_intent.getBooleanExtra("lang", true);
+        final boolean drum = get_intent.getBooleanExtra("drum", true);
+        final boolean hand = get_intent.getBooleanExtra("hand", true);
         /*
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
@@ -127,15 +129,18 @@ public class Sound extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Intent intent = new Intent(Sound.this, Settings.class);
             intent.putExtra("lang", language);
+            intent.putExtra("lang", language);
+            intent.putExtra("drum", drum);
+            intent.putExtra("hand", hand);
             startActivity(intent);
-            return true;
         }
         if (id == R.id.action_blue_tooth) {
 
             Intent intent = new Intent(Sound.this, hw_activity.class);
             intent.putExtra("lang", language);
+            intent.putExtra("drum", drum);
+            intent.putExtra("hand", hand);
             startActivity(intent);
-            return true;
         }
 
         return super.onOptionsItemSelected(item);

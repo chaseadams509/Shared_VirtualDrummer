@@ -358,18 +358,24 @@ public class hw_activity extends AppCompatActivity {
         int id = item.getItemId();
         Intent get_intent = getIntent();
         final boolean language = get_intent.getBooleanExtra("lang", true);
+        final boolean drum = get_intent.getBooleanExtra("drum", true);
+        final boolean hand = get_intent.getBooleanExtra("hand", true);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
             Intent intent = new Intent(hw_activity.this, Sound.class);
+            //intent.putExtra("blue", pairedDevicesArray);
             intent.putExtra("lang", language);
-            intent.putExtra("blue", pairedDevicesArray);
+            intent.putExtra("drum", drum);
+            intent.putExtra("hand", hand);
             startActivity(intent);
             return true;
         }
         if (id == R.id.action_settings) {
             Intent intent = new Intent(hw_activity.this, Settings.class);
             intent.putExtra("lang", language);
+            intent.putExtra("drum", drum);
+            intent.putExtra("hand", hand);
             startActivity(intent);
             return true;
         }

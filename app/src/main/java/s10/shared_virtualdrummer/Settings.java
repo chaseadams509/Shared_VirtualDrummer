@@ -1,13 +1,14 @@
 package s10.shared_virtualdrummer;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-//import android.widget.Button;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 public class Settings extends AppCompatActivity {
@@ -15,12 +16,30 @@ public class Settings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent get_intent = getIntent();
+        final Intent get_intent = getIntent();
         final boolean language = get_intent.getBooleanExtra("lang", true);
+        final boolean drumset = get_intent.getBooleanExtra("drum", true);
+        final boolean handed = get_intent.getBooleanExtra("hand", true);
         if (language) {
             setContentView(R.layout.settings);
         }else{
             setContentView(R.layout.settings_j);
+        }
+        Button taiko_set = (Button) this.findViewById(R.id.Taiko);
+        Button rock_set = (Button) this.findViewById(R.id.Rock_Kit);
+        if (!drumset){
+            taiko_set.setBackgroundColor(Color.parseColor("#0619bf"));
+            taiko_set.setTextColor(Color.WHITE);
+            rock_set.setBackgroundColor(Color.LTGRAY);
+            rock_set.setTextColor(Color.BLACK);
+        }
+        Button left_set = (Button) this.findViewById(R.id.left_handed);
+        Button right_set = (Button) this.findViewById(R.id.right_handed);
+        if (!handed){
+            left_set.setBackgroundColor(Color.parseColor("#0619bf"));
+            left_set.setTextColor(Color.WHITE);
+            right_set.setBackgroundColor(Color.LTGRAY);
+            right_set.setTextColor(Color.BLACK);
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -30,6 +49,48 @@ public class Settings extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Settings.this, Settings.class);
                 intent.putExtra("lang", !language);
+                intent.putExtra("drum", drumset);
+                intent.putExtra("hand", handed);
+                startActivity(intent);
+            }
+        });
+        taiko_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.this, Settings.class);
+                intent.putExtra("drum", false);
+                intent.putExtra("lang", language);
+                intent.putExtra("hand", handed);
+                startActivity(intent);
+            }
+        });
+        rock_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.this, Settings.class);
+                intent.putExtra("drum", true);
+                intent.putExtra("lang", language);
+                intent.putExtra("hand", handed);
+                startActivity(intent);
+            }
+        });
+        left_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.this, Settings.class);
+                intent.putExtra("hand", false);
+                intent.putExtra("lang", language);
+                intent.putExtra("drum", drumset);
+                startActivity(intent);
+            }
+        });
+        right_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.this, Settings.class);
+                intent.putExtra("hand", true);
+                intent.putExtra("lang", language);
+                intent.putExtra("drum", drumset);
                 startActivity(intent);
             }
         });
@@ -57,17 +118,24 @@ public class Settings extends AppCompatActivity {
         int id = item.getItemId();
         Intent get_intent = getIntent();
         final boolean language = get_intent.getBooleanExtra("lang", true);
+        final boolean drum = get_intent.getBooleanExtra("drum", true);
+        final boolean hand = get_intent.getBooleanExtra("hand", true);
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
             Intent intent = new Intent(Settings.this, Sound.class);
             intent.putExtra("lang", language);
+            intent.putExtra("drum", drum);
+            intent.putExtra("hand", hand);
             startActivity(intent);
             return true;
         }
         /*
         if (id == R.id.action_settings) {
             Intent intent = new Intent(Settings.this, Settings.class);
+            intent.putExtra("lang", language);
+            intent.putExtra("drum", drum);
+            intent.putExtra("hand", hand);
             startActivity(intent);
             return true;
         }
@@ -75,6 +143,8 @@ public class Settings extends AppCompatActivity {
         if (id == R.id.action_blue_tooth) {
             Intent intent = new Intent(Settings.this, hw_activity.class);
             intent.putExtra("lang", language);
+            intent.putExtra("drum", drum);
+            intent.putExtra("hand", hand);
             startActivity(intent);
             return true;
         }

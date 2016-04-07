@@ -40,6 +40,7 @@
             android:src="@drawable/japan"
             android:scaleType="fitCenter"
             android:padding="0dp"
+            android:background="#d3d3d3"
             android:layout_gravity="center" />
 
         <ImageButton
@@ -48,7 +49,7 @@
             android:src="@drawable/usa"
             android:scaleType="fitCenter"
             android:padding="0dp"
-            android:backgroundTint="#0619bf"
+            android:background="#0619bf"
             android:layout_gravity="center" />
 
     </LinearLayout>
@@ -63,14 +64,15 @@
             android:layout_height="50dp"
             android:text="@string/set_taiko"
             android:id="@+id/Taiko"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:background="#d3d3d3"/>
         <Button
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:text="@string/set_kit"
             android:id="@+id/Rock_Kit"
             android:layout_gravity="center"
-            android:backgroundTint="#0619bf"
+            android:background="#0619bf"
             android:textColor="#ffffff" />
 
     </LinearLayout>
@@ -85,7 +87,8 @@
             android:layout_height="50dp"
             android:text="@string/set_lefthand"
             android:id="@+id/left_handed"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:background="#d3d3d3"/>
 
         <Button
             android:layout_width="150dp"
@@ -93,7 +96,7 @@
             android:text="@string/set_righthand"
             android:id="@+id/right_handed"
             android:layout_gravity="center"
-            android:backgroundTint="#0619bf"
+            android:background="#0619bf"
             android:textColor="#ffffff" />
     </LinearLayout>
     </LinearLayout>
