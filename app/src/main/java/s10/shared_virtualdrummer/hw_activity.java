@@ -24,6 +24,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 
 public class hw_activity extends AppCompatActivity {
@@ -223,81 +224,49 @@ public class hw_activity extends AppCompatActivity {
             case StaticVars.MESSAGE_READ:
                 byte[] readBuf = (byte[])msg.obj;
                 String s = new String(readBuf);
-                String r = parse_data(s);
-                if(!r.isEmpty()) {
+                int r = parse_data(s);
+                if(r != Integer.MIN_VALUE) {
                     process_drum_data(r);
                 }
                 break;
-/*
-            case StaticVars.MESSAGE_READ_1:
-                byte[] readBuf = (byte[])msg.obj;
-                String s = new String(readBuf);
-                String r = parse_data(s);
-                if(!r.isEmpty()) {
-                    process_drum_data(r);
-                }
-                break;
-            case StaticVars.MESSAGE_READ_2:
-                byte[] readBuf2 = (byte[])msg.obj;
-                String s2 = new String(readBuf2);
-                String r2 = parse_data(s2);
-                if(!r2.isEmpty()) {
-                    process_drum_data(r2);
-                }
-
-                //String s2 = new String(readBuf2);
-                //String s2 = (String)msg.obj;
-                //dataText2.setText("Status: Data2 is " + s2);
-                //process_drum_data(s2);
-
-                break;
-*/
-
         }
     }
 
-    private String leftovers = "";
-    public String parse_data(String data) {
-        String total_data = leftovers + data;
-        String[] nSplit = total_data.split("\\n");
+    public int parse_data(String data) {
+        String[] nSplit = data.split("\\n");
         int last = nSplit.length - 1;
         int curr = nSplit.length - 2;
+        dataText1.setText("Val:" + data + "\n");
         if(last > 0) {
             //Found a newLine
-            leftovers = nSplit[last];
             String ret = nSplit[curr];
-            dataText1.setText("Val:" + ret + "\n");
-            if(ret.contains("@")) {
-                //Valid starting
-                ret = ret.replaceAll("[@\\s]", "");
-                try {
-                    if(Float.parseFloat(ret) != Float.NaN) {
-                        dataText2.setText("Found Sound Float!\n");
-                        return ret;
-                    }
-                } catch (NumberFormatException e) {
-                    dataText2.setText("FAIL: caught error!\n");
-                    return "";
-                }
-            }
-            //Invalid, throw away
-            dataText2.setText("FAIL: Invalid @!\n");
-            return "";
 
+            String[] nums = ret.split(" ", 2);
+            if(nums[0].length() == 4)
+                ret = nums[0];
+            else if (nums.length == 2)
+                ret = nums[1];
+            else
+                return Integer.MIN_VALUE;
+
+            Pattern intPattern = Pattern.compile("[+-]\\d{3}");
+            if(intPattern.matcher(ret).matches() ) {
+                int ret_int =  Integer.parseInt(ret);
+                return ret_int;
+            }
+
+                dataText2.setText("FAIL: Not a Number!\n");
+                return Integer.MIN_VALUE;
         } else {
-            //Didn't find a newLine yet
-            leftovers = nSplit[last];
+            //Didn't find a newLine
             dataText2.setText("FAIL: No newline!\n");
-            return "";
+            return Integer.MIN_VALUE;
         }
     }
 
-    public void process_drum_data(String data) {
-        float Yaw = Float.parseFloat(data);
+    public void process_drum_data(int data) {
+        int Yaw = data;
         dataText1.append("Y:" + Yaw);
-        Intent get_intent = getIntent();
-        //final boolean kitType = get_intent.getBooleanExtra("drum", true);
-        //final boolean rightHand = get_intent.getBooleanExtra("hand", true);
         statusText.setText("Status: Playing D:" + kitType + " H:" + rightHand);
 
         if(kitType) {
@@ -307,13 +276,13 @@ public class hw_activity extends AppCompatActivity {
                 Yaw = -1 * Yaw;
             }
 
-            if (Yaw < -35 && Yaw >= -70) {
+            if (Yaw < -45 && Yaw >= -90) {
                 drumPlayer.playSnare();
-            } else if (Yaw < 0 && Yaw >= -35) {
+            } else if (Yaw < 0 && Yaw >= -45) {
                 drumPlayer.playTom1();
-            } else if (Yaw < 35 && Yaw >= 0) {
+            } else if (Yaw < 45 && Yaw >= 0) {
                 drumPlayer.playTom2();
-            } else if (Yaw < 70 && Yaw >= 35) {
+            } else if (Yaw < 90 && Yaw >= 45) {
                 drumPlayer.playTom3();
             } else {
                 drumPlayer.playRide();
