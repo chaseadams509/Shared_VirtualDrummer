@@ -29,6 +29,28 @@ public class SoundPlayer {
         center = MediaPlayer.create(con, R.raw.center);
     }
 
+    public void destroy() {
+        bass.stop();
+        hiHat.stop();
+        ride.stop();
+        snare.stop();
+        tom1.stop();
+        tom2.stop();
+        tom3.stop();
+        rim.stop();
+        center.stop();
+
+        bass.release();
+        hiHat.release();
+        ride.release();
+        snare.release();
+        tom1.release();
+        tom2.release();
+        tom3.release();
+        rim.release();
+        center.release();
+    }
+
     public void playBass(){
         if (bass.isPlaying()){
             bass.seekTo(0);

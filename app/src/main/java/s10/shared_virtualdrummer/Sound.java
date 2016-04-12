@@ -1,5 +1,6 @@
 package s10.shared_virtualdrummer;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -118,6 +119,8 @@ public class Sound extends AppCompatActivity {
         final boolean language = get_intent.getBooleanExtra("lang", true);
         final boolean drum = get_intent.getBooleanExtra("drum", true);
         final boolean hand = get_intent.getBooleanExtra("hand", true);
+        final BluetoothDevice dev1 = get_intent.getExtras().getParcelable("dev1");
+        final BluetoothDevice dev2 = get_intent.getExtras().getParcelable("dev2");
         /*
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
@@ -129,19 +132,22 @@ public class Sound extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Intent intent = new Intent(Sound.this, Settings.class);
             intent.putExtra("lang", language);
-            intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("dev1", dev1);
+            intent.putExtra("dev2", dev2);
             finish();
             startActivity(intent);
 
         }
         if (id == R.id.action_blue_tooth) {
 
-            Intent intent = new Intent(Sound.this, hw_activity.class);
+            Intent intent = new Intent(Sound.this, Bluetooth.class);
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("dev1", dev1);
+            intent.putExtra("dev2", dev2);
             finish();
             startActivity(intent);
         }

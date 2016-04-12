@@ -364,7 +364,6 @@ public class hw_activity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
             Intent intent = new Intent(hw_activity.this, Sound.class);
-            //intent.putExtra("blue", pairedDevicesArray);
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
@@ -393,13 +392,6 @@ public class hw_activity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
-        /*
-        if (id == R.id.action_blue_tooth) {
-            Intent intent = new Intent(hw_activity.this, hw_activity.class);
-            startActivity(intent);
-            return true;
-        }
-        */
 
         return super.onOptionsItemSelected(item);
     }

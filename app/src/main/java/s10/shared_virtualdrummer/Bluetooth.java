@@ -39,13 +39,13 @@ public class Bluetooth extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent get_intent = getIntent();
         final boolean language = get_intent.getBooleanExtra("lang", true);
+        kitType = get_intent.getBooleanExtra("drum", true);
+        rightHand = get_intent.getBooleanExtra("hand", true);
         if (language) {
             setContentView(R.layout.bluetooth);
         }else{
             setContentView(R.layout.bluetooth);
         }
-        kitType = get_intent.getBooleanExtra("drum", true);
-        rightHand = get_intent.getBooleanExtra("hand", true);
         dev1 = get_intent.getExtras().getParcelable("dev1");
         dev2 = get_intent.getExtras().getParcelable("dev2");
         drumPlayer = new SoundPlayer(this);
@@ -167,6 +167,7 @@ public class Bluetooth extends AppCompatActivity {
                 drumPlayer.playRim();
             }
         }
+
     }
 
     @Override
@@ -193,6 +194,8 @@ public class Bluetooth extends AppCompatActivity {
         final boolean language = get_intent.getBooleanExtra("lang", true);
         final boolean drum = get_intent.getBooleanExtra("drum", true);
         final boolean hand = get_intent.getBooleanExtra("hand", true);
+        final BluetoothDevice d1 = get_intent.getParcelableExtra("dev1");
+        final BluetoothDevice d2 = get_intent.getParcelableExtra("dev2");
 
 
         //noinspection SimplifiableIfStatement
@@ -202,6 +205,11 @@ public class Bluetooth extends AppCompatActivity {
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("dev1", d1);
+            intent.putExtra("dev2", d2);
+            destroy_connections();
+            drumPlayer.destroy();
+            finish();
             startActivity(intent);
             return true;
         }
@@ -210,16 +218,14 @@ public class Bluetooth extends AppCompatActivity {
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("dev1", d1);
+            intent.putExtra("dev2", d2);
+            destroy_connections();
+            drumPlayer.destroy();
+            finish();
             startActivity(intent);
             return true;
         }
-        /*
-        if (id == R.id.action_blue_tooth) {
-            Intent intent = new Intent(hw_activity.this, hw_activity.class);
-            startActivity(intent);
-            return true;
-        }
-        */
 
         return super.onOptionsItemSelected(item);
     }

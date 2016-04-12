@@ -1,5 +1,6 @@
 package s10.shared_virtualdrummer;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,9 @@ public class Settings extends AppCompatActivity {
         final boolean language = get_intent.getBooleanExtra("lang", true);
         final boolean drumset = get_intent.getBooleanExtra("drum", true);
         final boolean handed = get_intent.getBooleanExtra("hand", true);
+        final BluetoothDevice d1 = get_intent.getParcelableExtra("dev1");
+        final BluetoothDevice d2 = get_intent.getParcelableExtra("dev2");
+
         if (language) {
             setContentView(R.layout.settings);
         }else{
@@ -51,6 +55,8 @@ public class Settings extends AppCompatActivity {
                 intent.putExtra("lang", !language);
                 intent.putExtra("drum", drumset);
                 intent.putExtra("hand", handed);
+                intent.putExtra("dev1", d1);
+                intent.putExtra("dev2", d2);
                 finish();
                 startActivity(intent);
             }
@@ -63,6 +69,8 @@ public class Settings extends AppCompatActivity {
                     intent.putExtra("drum", false);
                     intent.putExtra("lang", language);
                     intent.putExtra("hand", handed);
+                    intent.putExtra("dev1", d1);
+                    intent.putExtra("dev2", d2);
                     finish();
                     startActivity(intent);
                 }
@@ -76,6 +84,8 @@ public class Settings extends AppCompatActivity {
                     intent.putExtra("drum", true);
                     intent.putExtra("lang", language);
                     intent.putExtra("hand", handed);
+                    intent.putExtra("dev1", d1);
+                    intent.putExtra("dev2", d2);
                     finish();
                     startActivity(intent);
                 }
@@ -89,6 +99,8 @@ public class Settings extends AppCompatActivity {
                     intent.putExtra("hand", false);
                     intent.putExtra("lang", language);
                     intent.putExtra("drum", drumset);
+                    intent.putExtra("dev1", d1);
+                    intent.putExtra("dev2", d2);
                     finish();
                     startActivity(intent);
                 }
@@ -102,6 +114,8 @@ public class Settings extends AppCompatActivity {
                     intent.putExtra("hand", true);
                     intent.putExtra("lang", language);
                     intent.putExtra("drum", drumset);
+                    intent.putExtra("dev1", d1);
+                    intent.putExtra("dev2", d2);
                     finish();
                     startActivity(intent);
                 }
@@ -133,6 +147,8 @@ public class Settings extends AppCompatActivity {
         final boolean language = get_intent.getBooleanExtra("lang", true);
         final boolean drum = get_intent.getBooleanExtra("drum", true);
         final boolean hand = get_intent.getBooleanExtra("hand", true);
+        final BluetoothDevice dev1 = get_intent.getExtras().getParcelable("dev1");
+        final BluetoothDevice dev2 = get_intent.getExtras().getParcelable("dev2");
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_play) {
@@ -140,25 +156,19 @@ public class Settings extends AppCompatActivity {
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("dev1", dev1);
+            intent.putExtra("dev2", dev2);
             finish();
             startActivity(intent);
             return true;
         }
-        /*
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(Settings.this, Settings.class);
-            intent.putExtra("lang", language);
-            intent.putExtra("drum", drum);
-            intent.putExtra("hand", hand);
-            startActivity(intent);
-            return true;
-        }
-        */
         if (id == R.id.action_blue_tooth) {
-            Intent intent = new Intent(Settings.this, hw_activity.class);
+            Intent intent = new Intent(Settings.this, Bluetooth.class);
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("dev1", dev1);
+            intent.putExtra("dev2", dev2);
             finish();
             startActivity(intent);
             return true;
