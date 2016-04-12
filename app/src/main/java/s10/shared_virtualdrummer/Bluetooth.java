@@ -10,9 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
 import java.util.regex.Pattern;
 
 public class Bluetooth extends AppCompatActivity {
+    private TextView statusText;
     private BluetoothDevice dev1;
     private BluetoothDevice dev2;
     private ConnectThread stick1_connect;
@@ -46,11 +49,18 @@ public class Bluetooth extends AppCompatActivity {
         dev1 = get_intent.getExtras().getParcelable("dev1");
         dev2 = get_intent.getExtras().getParcelable("dev2");
         drumPlayer = new SoundPlayer(this);
+
+        statusText = (TextView)findViewById(R.id.status_text);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        statusText.setText("Started Launching BT Acitivity");
+
         stick1_connect = new ConnectThread(dev1, mHandler, 1);
+        stick1_connect.start();
         stick2_connect = new ConnectThread(dev2, mHandler, 2);
+        stick2_connect.start();
+        statusText.setText("Started Connecting to BT devices");
     }
 
     public void destroy_connections() {
@@ -78,13 +88,16 @@ public class Bluetooth extends AppCompatActivity {
             case StaticVars.SUCCESS_CONNECT_1:
                 stick1_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler);
                 stick1_maintain.start();
+                statusText.setText("Successfully connected to Dev1");
                 break;
             case StaticVars.SUCCESS_CONNECT_2:
                 stick2_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler);
                 stick2_maintain.start();
+                statusText.setText("Successfully connected to Dev2");
                 break;
             case StaticVars.FAIL_CONNECT:
                 destroy_connections();
+                statusText.setText("Failed to connect to BT devices");
                 break;
             case StaticVars.MESSAGE_READ:
                 byte[] readBuf = (byte[])msg.obj;
