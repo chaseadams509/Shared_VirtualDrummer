@@ -37,9 +37,9 @@ public class Bluetooth extends AppCompatActivity {
         Intent get_intent = getIntent();
         final boolean language = get_intent.getBooleanExtra("lang", true);
         if (language) {
-            setContentView(R.layout.activity_hw_activity);
+            setContentView(R.layout.bluetooth);
         }else{
-            setContentView(R.layout.activity_hw_activity_j);
+            setContentView(R.layout.bluetooth);
         }
         kitType = get_intent.getBooleanExtra("drum", true);
         rightHand = get_intent.getBooleanExtra("hand", true);
