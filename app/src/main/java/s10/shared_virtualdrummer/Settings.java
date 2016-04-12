@@ -140,6 +140,7 @@ public class Settings extends AppCompatActivity {
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            finish();
             startActivity(intent);
             return true;
         }
@@ -158,6 +159,7 @@ public class Settings extends AppCompatActivity {
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            finish();
             startActivity(intent);
             return true;
         }

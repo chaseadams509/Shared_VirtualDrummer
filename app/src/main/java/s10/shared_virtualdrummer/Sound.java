@@ -132,7 +132,9 @@ public class Sound extends AppCompatActivity {
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            finish();
             startActivity(intent);
+
         }
         if (id == R.id.action_blue_tooth) {
 
@@ -140,6 +142,7 @@ public class Sound extends AppCompatActivity {
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            finish();
             startActivity(intent);
         }
 

@@ -42,22 +42,24 @@ public class hw_activity extends AppCompatActivity {
 
     private BluetoothAdapter myBluetoothAdapter;
 
-    private ConnectThread stick1_connect;
+   /* private ConnectThread stick1_connect;
     private ConnectedThread stick1_maintain;
     private ConnectThread stick2_connect;
     private ConnectedThread stick2_maintain;
-
-    private SoundPlayer drumPlayer;
+    */
+    private BluetoothDevice dev1;
+    private BluetoothDevice dev2;
+    //private SoundPlayer drumPlayer;
     private boolean kitType = true;
     private boolean rightHand = true;
 
-    Handler mHandler = new Handler() {
+    /*Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            check_msg_connection(msg);
+            //check_msg_connection(msg);
         }
-    };
+    };*/
 
 
     @Override
@@ -72,7 +74,7 @@ public class hw_activity extends AppCompatActivity {
         }
         kitType = get_intent.getBooleanExtra("drum", true);
         rightHand = get_intent.getBooleanExtra("hand", true);
-        drumPlayer = new SoundPlayer(this);
+        //drumPlayer = new SoundPlayer(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -147,7 +149,7 @@ public class hw_activity extends AppCompatActivity {
         myBluetoothAdapter.disable();
         listBtn.setEnabled(false);
         BTArrayAdapter.clear();
-        destroy_connections();
+       // destroy_connections();
         statusText.setText("Status: Disconnected");
     }
 
@@ -161,7 +163,7 @@ public class hw_activity extends AppCompatActivity {
     }
 
 
-    public void destroy_connections() {
+    /*public void destroy_connections() {
         if(stick1_connect != null) {
             stick1_connect.cancel();
             stick1_connect = null;
@@ -178,7 +180,7 @@ public class hw_activity extends AppCompatActivity {
             stick2_maintain.cancel();
             stick2_maintain = null;
         }
-    }
+    }*/
 
 
     public void connect_dv(AdapterView<?> par, View v, int pos, long id) {
@@ -189,7 +191,15 @@ public class hw_activity extends AppCompatActivity {
         statusText.setText("Status: connect to " + mDeviceInfo.substring(0, name_end));
 
         BluetoothDevice selectedDevice = pairedDevicesArray.get(pos);
-
+        if (dev1 == null){
+            dev1 = selectedDevice;
+            statusText.setText("set dev1 as " + mDeviceInfo.substring(0, name_end));
+        }
+        else {
+            dev2 = selectedDevice;
+            statusText.setText("set dev2 as " + mDeviceInfo.substring(0, name_end));
+        }
+/*
         if(stick1_connect == null) {
             statusText.setText("Status: connecting to (1)" + mDeviceInfo.substring(0, name_end));
             stick1_connect = new ConnectThread(selectedDevice, mHandler, 1);
@@ -199,11 +209,10 @@ public class hw_activity extends AppCompatActivity {
             stick2_connect = new ConnectThread(selectedDevice, mHandler, 2);
             stick2_connect.start();
         }
-
+*/
     }
 
-
-    public void check_msg_connection(Message msg) {
+/*public void check_msg_connection(Message msg) {
         switch(msg.what) {
             case StaticVars.SUCCESS_CONNECT_1:
 //                stick1_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler, 1);
@@ -296,7 +305,7 @@ public class hw_activity extends AppCompatActivity {
             }
         }
     }
-
+*/
 
 
     final BroadcastReceiver bReceiver = new BroadcastReceiver() {
@@ -359,6 +368,8 @@ public class hw_activity extends AppCompatActivity {
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("dev1", dev1);
+            intent.putExtra("dev2", dev2);
             startActivity(intent);
             return true;
         }
@@ -367,6 +378,18 @@ public class hw_activity extends AppCompatActivity {
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("dev1", dev1);
+            intent.putExtra("dev2", dev2);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_blue_tooth) {
+            Intent intent = new Intent(hw_activity.this, Bluetooth.class);
+            intent.putExtra("lang", language);
+            intent.putExtra("drum", drum);
+            intent.putExtra("hand", hand);
+            intent.putExtra("dev1", dev1);
+            intent.putExtra("dev2", dev2);
             startActivity(intent);
             return true;
         }
