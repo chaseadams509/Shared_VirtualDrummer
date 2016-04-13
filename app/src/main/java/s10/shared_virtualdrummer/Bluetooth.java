@@ -56,10 +56,14 @@ public class Bluetooth extends AppCompatActivity {
 
         statusText.setText("Started Launching BT Acitivity");
 
-        stick1_connect = new ConnectThread(dev1, mHandler, 1);
-        stick1_connect.start();
-        stick2_connect = new ConnectThread(dev2, mHandler, 2);
-        stick2_connect.start();
+        if(dev1 != null) {
+            stick1_connect = new ConnectThread(dev1, mHandler, 1);
+            stick1_connect.start();
+        }
+        if(dev2 != null) {
+            stick2_connect = new ConnectThread(dev2, mHandler, 2);
+            stick2_connect.start();
+        }
         statusText.setText("Started Connecting to BT devices");
     }
 
@@ -118,11 +122,13 @@ public class Bluetooth extends AppCompatActivity {
             //Found a newLine
             String ret = nSplit[curr];
 
-            String[] nums = ret.split(" ", 2);
+            String[] nums = ret.split(" ");
             if(nums[0].length() == 4)
                 ret = nums[0];
-            else if (nums.length == 2)
+            else if (nums.length > 1 && nums[1].length() == 4)
                 ret = nums[1];
+            else if (nums.length > 2 && nums[2].length() == 4)
+                ret = nums[2];
             else
                 return Integer.MIN_VALUE;
 
