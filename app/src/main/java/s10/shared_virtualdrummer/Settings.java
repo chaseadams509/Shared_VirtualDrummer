@@ -150,18 +150,6 @@ public class Settings extends AppCompatActivity {
         final BluetoothDevice dev1 = get_intent.getExtras().getParcelable("dev1");
         final BluetoothDevice dev2 = get_intent.getExtras().getParcelable("dev2");
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_play) {
-            Intent intent = new Intent(Settings.this, Sound.class);
-            intent.putExtra("lang", language);
-            intent.putExtra("drum", drum);
-            intent.putExtra("hand", hand);
-            intent.putExtra("dev1", dev1);
-            intent.putExtra("dev2", dev2);
-            finish();
-            startActivity(intent);
-            return true;
-        }
         if (id == R.id.action_blue_tooth) {
             Intent intent = new Intent(Settings.this, Bluetooth.class);
             intent.putExtra("lang", language);

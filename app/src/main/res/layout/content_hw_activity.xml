@@ -38,25 +38,5 @@
         android:id="@+id/listView1"
         android:layout_width="wrap_content"
         android:layout_height="100dp">
-
     </ListView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp">
-        <TextView
-            android:id="@+id/raw_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="No Data"/>
-        <TextView
-            android:id="@+id/raw_text2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="No Data"/>
-        </LinearLayout>
-
 </LinearLayout>
