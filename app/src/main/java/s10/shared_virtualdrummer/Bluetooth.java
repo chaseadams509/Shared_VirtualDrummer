@@ -25,6 +25,8 @@ public class Bluetooth extends AppCompatActivity {
     private SoundPlayer drumPlayer;
     private boolean kitType = true;
     private boolean rightHand = true;
+    private boolean language = true;
+    private int numConnected = 0;
 
     Handler mHandler = new Handler() {
         @Override
@@ -38,7 +40,7 @@ public class Bluetooth extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent get_intent = getIntent();
-        final boolean language = get_intent.getBooleanExtra("lang", true);
+        language = get_intent.getBooleanExtra("lang", true);
         kitType = get_intent.getBooleanExtra("drum", true);
         rightHand = get_intent.getBooleanExtra("hand", true);
         if (language) {
@@ -54,7 +56,11 @@ public class Bluetooth extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        statusText.setText("Started Launching BT Acitivity");
+        if(language) {
+            statusText.setText("Starting...");
+        } else {
+            statusText.setText("少々お待ちください");
+        }
 
         if(dev1 != null) {
             stick1_connect = new ConnectThread(dev1, mHandler, 1);
@@ -64,10 +70,16 @@ public class Bluetooth extends AppCompatActivity {
             stick2_connect = new ConnectThread(dev2, mHandler, 2);
             stick2_connect.start();
         }
-        statusText.setText("Started Connecting to BT devices");
+
+        if(language) {
+            statusText.setText("Connecting to drumsticks");
+        } else {
+            statusText.setText("撥らを繋ぎ中です");
+        }
     }
 
     public void destroy_connections() {
+        numConnected = 0;
         if(stick1_connect != null) {
             stick1_connect.cancel();
             stick1_connect = null;
@@ -92,16 +104,30 @@ public class Bluetooth extends AppCompatActivity {
             case StaticVars.SUCCESS_CONNECT_1:
                 stick1_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler);
                 stick1_maintain.start();
-                statusText.setText("Successfully connected to Dev1");
+                if(language) {
+                    statusText.setText("Connected to first drumstick");
+                } else {
+                    statusText.setText("一本目の撥を繋いだところ");
+                }
+                numConnected++;
                 break;
             case StaticVars.SUCCESS_CONNECT_2:
                 stick2_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler);
                 stick2_maintain.start();
-                statusText.setText("Successfully connected to Dev2");
+                if(language) {
+                    statusText.setText("Connected to second drumstick");
+                } else {
+                    statusText.setText("二本目の撥を繋いだところ");
+                }
+                numConnected++;
                 break;
             case StaticVars.FAIL_CONNECT:
                 destroy_connections();
-                statusText.setText("Failed to connect to BT devices");
+                if(language) {
+                    statusText.setText("Failed to connect to drumsticks");
+                } else {
+                    statusText.setText("撥らを繋ぐ失敗");
+                }
                 break;
             case StaticVars.MESSAGE_READ:
                 byte[] readBuf = (byte[])msg.obj;
@@ -111,6 +137,32 @@ public class Bluetooth extends AppCompatActivity {
                     process_drum_data(r);
                 }
                 break;
+        }
+
+        if(numConnected == 2 || (numConnected == 1 && dev2 == null)) {
+            if(language) {
+                statusText.setText("Ready to Play!\n");
+                if(kitType) {
+                    if(rightHand) {
+                        statusText.append("Currently Playing right-handed Rock Kit");
+                    } else {
+                        statusText.append("Currently Playing left-handed Rock Kit");
+                    }
+                } else {
+                    statusText.append("Currently Playing Japanese Taiko Drum");
+                }
+            } else {
+                statusText.setText("プレイ始めましょう!\n");
+                if(kitType) {
+                    if(rightHand) {
+                        statusText.append("今、右利きでロックキットはプレイ中です。");
+                    } else {
+                        statusText.append("今、左利きでロックキットはプレイ中です。");
+                    }
+                } else {
+                    statusText.append("今、和太鼓はプレイ中です。");
+                }
+            }
         }
     }
 
@@ -154,20 +206,22 @@ public class Bluetooth extends AppCompatActivity {
                 Yaw = -1 * Yaw;
             }
 
-            if (Yaw < -45 && Yaw >= -90) {
+            if (Yaw < -40 && Yaw >= -80) {
                 drumPlayer.playSnare();
-            } else if (Yaw < 0 && Yaw >= -45) {
+            } else if (Yaw < 0 && Yaw >= -40) {
                 drumPlayer.playTom1();
-            } else if (Yaw < 45 && Yaw >= 0) {
+            } else if (Yaw < 40 && Yaw >= 0) {
                 drumPlayer.playTom2();
-            } else if (Yaw < 90 && Yaw >= 45) {
+            } else if (Yaw < 80 && Yaw >= 40) {
                 drumPlayer.playTom3();
-            } else {
+            } else if (Yaw < -80){
+                drumPlayer.playHiHat();
+            } else { // Yaw > 80
                 drumPlayer.playRide();
             }
         } else {
             //Taiko Drum
-            if (Yaw < 35 && Yaw > -35) {
+            if (Yaw < 40 && Yaw > -40) {
                 drumPlayer.playCenter();
             } else {
                 drumPlayer.playRim();
@@ -197,7 +251,7 @@ public class Bluetooth extends AppCompatActivity {
         //Sound add item selected for menu switching.
         int id = item.getItemId();
         Intent get_intent = getIntent();
-        final boolean language = get_intent.getBooleanExtra("lang", true);
+        final boolean lang = get_intent.getBooleanExtra("lang", true);
         final boolean drum = get_intent.getBooleanExtra("drum", true);
         final boolean hand = get_intent.getBooleanExtra("hand", true);
         final BluetoothDevice d1 = get_intent.getParcelableExtra("dev1");
@@ -205,23 +259,9 @@ public class Bluetooth extends AppCompatActivity {
 
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_play) {
-            Intent intent = new Intent(Bluetooth.this, Sound.class);
-            //intent.putExtra("blue", pairedDevicesArray);
-            intent.putExtra("lang", language);
-            intent.putExtra("drum", drum);
-            intent.putExtra("hand", hand);
-            intent.putExtra("dev1", d1);
-            intent.putExtra("dev2", d2);
-            destroy_connections();
-            drumPlayer.destroy();
-            finish();
-            startActivity(intent);
-            return true;
-        }
         if (id == R.id.action_settings) {
             Intent intent = new Intent(Bluetooth.this, Settings.class);
-            intent.putExtra("lang", language);
+            intent.putExtra("lang", lang);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
             intent.putExtra("dev1", d1);
