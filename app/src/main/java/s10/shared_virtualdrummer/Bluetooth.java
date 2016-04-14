@@ -248,7 +248,6 @@ public class Bluetooth extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        //Sound add item selected for menu switching.
         int id = item.getItemId();
         Intent get_intent = getIntent();
         final boolean lang = get_intent.getBooleanExtra("lang", true);

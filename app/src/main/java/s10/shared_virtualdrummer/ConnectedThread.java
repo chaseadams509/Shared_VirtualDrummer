@@ -7,23 +7,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
- * Created by cadams on 3/11/16.
- */
 public class ConnectedThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
-//    private int stick;
     private Handler mHandler;
 
-//    public ConnectedThread(BluetoothSocket socket, Handler cHandler, int s) {
     public ConnectedThread(BluetoothSocket socket, Handler cHandler) {
         mmSocket = socket;
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
         mHandler = cHandler;
-//        stick = s;
 
         // Get the input and output streams, using temp objects because
         // member streams are final
@@ -49,15 +43,6 @@ public class ConnectedThread extends Thread {
                 // Send the obtained bytes to the UI activity
                 mHandler.obtainMessage(StaticVars.MESSAGE_READ, bytes, -1, buffer)
                         .sendToTarget();
-/*
-                if(stick == 1) {
-                    mHandler.obtainMessage(StaticVars.MESSAGE_READ_1, bytes, -1, buffer)
-                            .sendToTarget();
-                } else {
-                    mHandler.obtainMessage(StaticVars.MESSAGE_READ_2, bytes, -1, buffer)
-                            .sendToTarget();
-                }
-*/
             } catch (IOException e) {
                 break;
             }

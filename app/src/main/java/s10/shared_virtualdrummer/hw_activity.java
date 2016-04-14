@@ -48,7 +48,6 @@ public class hw_activity extends AppCompatActivity {
         }
         kitType = get_intent.getBooleanExtra("drum", true);
         rightHand = get_intent.getBooleanExtra("hand", true);
-        //drumPlayer = new SoundPlayer(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -98,7 +97,7 @@ public class hw_activity extends AppCompatActivity {
             BTArrayAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1);
             myListView.setAdapter(BTArrayAdapter);
-            statusText.setText("Status: Enabled D:" + kitType + " H:" + rightHand);
+            statusText.setText("Status: Enabled");
 
             if(!myBluetoothAdapter.isEnabled()) {
                 listBtn.setEnabled(false);
@@ -121,7 +120,6 @@ public class hw_activity extends AppCompatActivity {
         myBluetoothAdapter.disable();
         listBtn.setEnabled(false);
         BTArrayAdapter.clear();
-       // destroy_connections();
         statusText.setText("Status: Disconnected");
     }
 
@@ -138,9 +136,7 @@ public class hw_activity extends AppCompatActivity {
     public void connect_dv(AdapterView<?> par, View v, int pos, long id) {
         myBluetoothAdapter.cancelDiscovery();
         String mDeviceInfo = ((TextView) v).getText().toString();
-        //String mDeviceAddress = mDeviceInfo.substring(mDeviceInfo.length() - 17);
         int name_end = mDeviceInfo.indexOf("\n");
-        statusText.setText("Status: connect to " + mDeviceInfo.substring(0, name_end));
 
         BluetoothDevice selectedDevice = pairedDevicesArray.get(pos);
         if (dev1 == null){
