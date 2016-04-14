@@ -127,7 +127,7 @@ public class hw_activity extends AppCompatActivity {
             if(!myBluetoothAdapter.isEnabled()) {
                 listBtn.setEnabled(false);
                 if(language) {
-                    statusText.setText("Status: Disconnected");
+                    statusText.setText("Status: Disabled");
                 } else {
                     statusText.setText("状態：　オフ");
                 }
@@ -150,7 +150,7 @@ public class hw_activity extends AppCompatActivity {
         listBtn.setEnabled(false);
         BTArrayAdapter.clear();
         if(language) {
-            statusText.setText("Status: Disconnected");
+            statusText.setText("Status: Disabled");
         } else {
             statusText.setText("状態：　オフ");
         }
