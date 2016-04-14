@@ -76,7 +76,7 @@ public class hw_activity extends AppCompatActivity {
             if(language) {
                 statusText.setText("Status: not supported");
             } else {
-                statusText.setText("PRAISE THY EMPEROR!");
+                statusText.setText("状態：　採用しません");
             }
         } else {
             statusText = (TextView)findViewById(R.id.status_text);
@@ -121,7 +121,7 @@ public class hw_activity extends AppCompatActivity {
             if(language) {
                 statusText.setText("Status: Enabled");
             } else {
-                statusText.setText("PRAISE THY EMPEROR!");
+                statusText.setText("状態：　スタート");
             }
 
             if(!myBluetoothAdapter.isEnabled()) {
@@ -129,7 +129,7 @@ public class hw_activity extends AppCompatActivity {
                 if(language) {
                     statusText.setText("Status: Disconnected");
                 } else {
-                    statusText.setText("PRAISE THY EMPEROR!");
+                    statusText.setText("状態：　オフ");
                 }
             }
 
@@ -152,7 +152,7 @@ public class hw_activity extends AppCompatActivity {
         if(language) {
             statusText.setText("Status: Disconnected");
         } else {
-            statusText.setText("PRAISE THY EMPEROR!");
+            statusText.setText("状態：　オフ");
         }
     }
 
@@ -175,17 +175,17 @@ public class hw_activity extends AppCompatActivity {
         if (dev1 == null){
             dev1 = selectedDevice;
             if(language) {
-                statusText.setText("set dev1 as " + mDeviceInfo.substring(0, name_end));
+                statusText.setText(mDeviceInfo.substring(0, name_end) + " selected as drumstick 1");
             } else {
-                statusText.setText("PRAISE THY EMPEROR!");
+                statusText.setText(mDeviceInfo.substring(0, name_end) + "は一本目の撥になりました");
             }
         }
         else {
             dev2 = selectedDevice;
             if(language) {
-                statusText.setText("set dev2 as " + mDeviceInfo.substring(0, name_end));
+                statusText.setText(mDeviceInfo.substring(0, name_end) + " selected as drumstick 2");
             } else {
-                statusText.setText("PRAISE THY EMPEROR!");
+                statusText.setText(mDeviceInfo.substring(0, name_end) + "は二本目の撥になりました");
             }
         }
     }
@@ -213,13 +213,13 @@ public class hw_activity extends AppCompatActivity {
                 if(language) {
                     statusText.setText("Status: Enabled");
                 } else {
-                    statusText.setText("PRAISE THY EMPEROR!");
+                    statusText.setText("状態：　スタート");
                 }
             } else {
                 if(language) {
                     statusText.setText("Status: Disabled");
                 } else {
-                    statusText.setText("PRAISE THY EMPEROR!");
+                    statusText.setText("状態：　オフ");
                 }
             }
         }
@@ -246,7 +246,7 @@ public class hw_activity extends AppCompatActivity {
             if(language) {
                 statusText.setText("Please enable Bluetooth and select at least one drumstick");
             } else {
-                statusText.setText("PRAISE THY EMPEROR!");
+                statusText.setText("ブルートゥースをスタートし、くなくとも一本の撥をクリックください");
             }
             return true;
         }

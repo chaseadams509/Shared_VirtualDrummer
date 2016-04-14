@@ -24,7 +24,7 @@
     <string name="action_settings_j">⚙ 設定</string>
     <string name="action_blue_tooth_j">▶ プレイ</string>
     <string name="on_text_j">スタート</string>
-    <string name="off_text_j">終了</string>
+    <string name="off_text_j">オフ</string>
     <string name="list_paired_j">登録済みブルートゥース機器</string>
     <string name="set_kit_j">ロックキット</string>
     <string name="set_taiko_j">和太鼓</string>
