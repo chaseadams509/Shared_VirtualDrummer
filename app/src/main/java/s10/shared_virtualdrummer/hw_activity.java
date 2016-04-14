@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -32,22 +33,38 @@ public class hw_activity extends AppCompatActivity {
     private BluetoothAdapter myBluetoothAdapter;
     private BluetoothDevice dev1;
     private BluetoothDevice dev2;
-    private boolean kitType = true;
-    private boolean rightHand = true;
-
+    private boolean language = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent get_intent = getIntent();
-        final boolean language = get_intent.getBooleanExtra("lang", true);
+        setContentView(R.layout.flag_activity);
+
+        ImageButton jpnBtn = (ImageButton)this.findViewById(R.id.lang_jpn);
+        jpnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                language = false;
+                setup_page();
+            }
+        });
+
+        ImageButton engBtn = (ImageButton)this.findViewById(R.id.lang_eng);
+        engBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                language = true;
+                setup_page();
+            }
+        });
+    }
+
+    public void setup_page() {
         if (language) {
             setContentView(R.layout.activity_hw_activity);
         }else{
             setContentView(R.layout.activity_hw_activity_j);
         }
-        kitType = get_intent.getBooleanExtra("drum", true);
-        rightHand = get_intent.getBooleanExtra("hand", true);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,7 +73,11 @@ public class hw_activity extends AppCompatActivity {
             onBtn.setEnabled(false);
             offBtn.setEnabled(false);
             listBtn.setEnabled(false);
-            statusText.setText("Status: not supported");
+            if(language) {
+                statusText.setText("Status: not supported");
+            } else {
+                statusText.setText("PRAISE THY EMPEROR!");
+            }
         } else {
             statusText = (TextView)findViewById(R.id.status_text);
 
@@ -97,11 +118,19 @@ public class hw_activity extends AppCompatActivity {
             BTArrayAdapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1);
             myListView.setAdapter(BTArrayAdapter);
-            statusText.setText("Status: Enabled");
+            if(language) {
+                statusText.setText("Status: Enabled");
+            } else {
+                statusText.setText("PRAISE THY EMPEROR!");
+            }
 
             if(!myBluetoothAdapter.isEnabled()) {
                 listBtn.setEnabled(false);
-                statusText.setText("Status: Disconnected");
+                if(language) {
+                    statusText.setText("Status: Disconnected");
+                } else {
+                    statusText.setText("PRAISE THY EMPEROR!");
+                }
             }
 
             pairedDevicesArray = new ArrayList<BluetoothDevice>();
@@ -120,7 +149,11 @@ public class hw_activity extends AppCompatActivity {
         myBluetoothAdapter.disable();
         listBtn.setEnabled(false);
         BTArrayAdapter.clear();
-        statusText.setText("Status: Disconnected");
+        if(language) {
+            statusText.setText("Status: Disconnected");
+        } else {
+            statusText.setText("PRAISE THY EMPEROR!");
+        }
     }
 
     public void list_bt(View view) {
@@ -141,11 +174,19 @@ public class hw_activity extends AppCompatActivity {
         BluetoothDevice selectedDevice = pairedDevicesArray.get(pos);
         if (dev1 == null){
             dev1 = selectedDevice;
-            statusText.setText("set dev1 as " + mDeviceInfo.substring(0, name_end));
+            if(language) {
+                statusText.setText("set dev1 as " + mDeviceInfo.substring(0, name_end));
+            } else {
+                statusText.setText("PRAISE THY EMPEROR!");
+            }
         }
         else {
             dev2 = selectedDevice;
-            statusText.setText("set dev2 as " + mDeviceInfo.substring(0, name_end));
+            if(language) {
+                statusText.setText("set dev2 as " + mDeviceInfo.substring(0, name_end));
+            } else {
+                statusText.setText("PRAISE THY EMPEROR!");
+            }
         }
     }
 
@@ -169,9 +210,17 @@ public class hw_activity extends AppCompatActivity {
         if(requestCode == StaticVars.REQUEST_ENABLE_BT) {
             // Make sure the request was successful
             if(myBluetoothAdapter.isEnabled()) {
-                statusText.setText("Status: Enabled");
+                if(language) {
+                    statusText.setText("Status: Enabled");
+                } else {
+                    statusText.setText("PRAISE THY EMPEROR!");
+                }
             } else {
-                statusText.setText("Status: Disabled");
+                if(language) {
+                    statusText.setText("Status: Disabled");
+                } else {
+                    statusText.setText("PRAISE THY EMPEROR!");
+                }
             }
         }
     }
@@ -179,8 +228,6 @@ public class hw_activity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        Intent get_intent = getIntent();
-        final boolean language = get_intent.getBooleanExtra("lang", true);
         if (language) {
             getMenuInflater().inflate(R.menu.menu_hw_activity, menu);
         }else{
@@ -195,17 +242,25 @@ public class hw_activity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         //Sound add item selected for menu switching.
+        if(dev1 == null) {
+            if(language) {
+                statusText.setText("Please enable Bluetooth and select at least one drumstick");
+            } else {
+                statusText.setText("PRAISE THY EMPEROR!");
+            }
+            return true;
+        }
+
         int id = item.getItemId();
-        Intent get_intent = getIntent();
-        final boolean language = get_intent.getBooleanExtra("lang", true);
-        final boolean drum = get_intent.getBooleanExtra("drum", true);
-        final boolean hand = get_intent.getBooleanExtra("hand", true);
+        final boolean lang = language;
+        final boolean drum = true;
+        final boolean hand = true;
 
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(hw_activity.this, Settings.class);
-            intent.putExtra("lang", language);
+            intent.putExtra("lang", lang);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
             intent.putExtra("dev1", dev1);
@@ -215,7 +270,7 @@ public class hw_activity extends AppCompatActivity {
         }
         if (id == R.id.action_blue_tooth) {
             Intent intent = new Intent(hw_activity.this, Bluetooth.class);
-            intent.putExtra("lang", language);
+            intent.putExtra("lang", lang);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
             intent.putExtra("dev1", dev1);
