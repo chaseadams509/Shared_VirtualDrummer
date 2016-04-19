@@ -13,7 +13,7 @@
     <string name="set_lefthand">Left Handed</string>
     <string name="set_righthand">Right Handed</string>
     <string name="credits_text">Developers:\n•Taylor Meares\n•Chase Adams\n•Alex Coyle\n•Adam Zuravleff\n•Myles Hebert
-    \nSpecial Thanks:\n•Ayanna Howard\n•Masato Kikuchi\n•Mike S\n•Fabio Varesano</string>
+    \n&#160;\nSpecial Thanks:\n•Ayanna Howard\n•Masato Kikuchi\n•Mike S\n•Fabio Varesano</string>
     <!--
     <string name="drum_bass">Bass</string>
     <string name="drum_hihat">HiHat</string>
@@ -51,7 +51,7 @@
     <string name="set_lefthand_j">左利き</string>
     <string name="set_righthand_j">右利き</string>
     <string name="credits_text_j">開発者:\n•Taylor Meares\n•Chase Adams\n•Alex Coyle\n•Adam Zuravleff\n•Myles Hebert
-    \ありがとうございました:\n•Ayanna Howard\n•菊池\n•Mike S\n•Fabio Varesano</string>
+    \n&#160;\nありがとうございました:\n•Ayanna Howard\n•菊池\n•Mike S\n•Fabio Varesano</string>
     <!--
     <string name="drum_bass_j">ベース</string>
     <string name="drum_hihat_j">ハイハット</string>
