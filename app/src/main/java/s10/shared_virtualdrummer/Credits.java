@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -18,6 +19,9 @@ public class Credits  extends AppCompatActivity {
         setContentView(R.layout.credits);
 
         creditsText = (TextView)findViewById(R.id.credits);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         if(language) {
             creditsText.setText(R.string.credits_text);
         } else {
