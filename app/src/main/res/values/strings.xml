@@ -3,7 +3,7 @@
 
     <string name="action_settings">⚙ Settings</string>
     <string name="action_blue_tooth">▶ Play</string>
-    <string name="action_credits">Credits</string>
+    <string name="action_credits">© Credits</string>
     <string name="status_text">Status: -</string>
     <string name="on_text">Turn On</string>
     <string name="off_text">Turn Off</string>
@@ -12,7 +12,8 @@
     <string name="set_taiko">Taiko</string>
     <string name="set_lefthand">Left Handed</string>
     <string name="set_righthand">Right Handed</string>
-    <string name="credits_text">English Credits</string>
+    <string name="credits_text">Developers:\n•Taylor Meares\n•Chase Adams\n•Alex Coyle\n•Adam Zuravleff\n•Myles Hebert
+    \nSpecial Thanks:\n•Ayanna Howard\n•Masato Kikuchi\n•Mike S\n•Fabio Varesano</string>
     <!--
     <string name="drum_bass">Bass</string>
     <string name="drum_hihat">HiHat</string>
@@ -41,7 +42,7 @@
 
     <string name="action_settings_j">⚙ 設定</string>
     <string name="action_blue_tooth_j">▶ プレイ</string>
-    <string name="action_credits_j">Credits_J</string>
+    <string name="action_credits_j">© クレジット</string>
     <string name="on_text_j">スタート</string>
     <string name="off_text_j">オフ</string>
     <string name="list_paired_j">登録済みブルートゥース機器</string>
@@ -49,7 +50,8 @@
     <string name="set_taiko_j">和太鼓</string>
     <string name="set_lefthand_j">左利き</string>
     <string name="set_righthand_j">右利き</string>
-    <string name="credits_text_j">Japanese Credits</string>
+    <string name="credits_text_j">開発者:\n•Taylor Meares\n•Chase Adams\n•Alex Coyle\n•Adam Zuravleff\n•Myles Hebert
+    \ありがとうございました:\n•Ayanna Howard\n•菊池\n•Mike S\n•Fabio Varesano</string>
     <!--
     <string name="drum_bass_j">ベース</string>
     <string name="drum_hihat_j">ハイハット</string>
