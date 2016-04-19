@@ -281,6 +281,16 @@ public class hw_activity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_credits) {
+            Intent intent = new Intent(hw_activity.this, Credits.class);
+            intent.putExtra("lang", lang);
+            intent.putExtra("drum", drum);
+            intent.putExtra("hand", hand);
+            intent.putExtra("dev1", dev1);
+            intent.putExtra("dev2", dev2);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

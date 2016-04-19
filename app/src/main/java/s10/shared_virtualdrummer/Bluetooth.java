@@ -274,6 +274,16 @@ public class Bluetooth extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_credits) {
+            Intent intent = new Intent(Bluetooth.this, Credits.class);
+            intent.putExtra("lang", lang);
+            intent.putExtra("drum", drum);
+            intent.putExtra("hand", hand);
+            intent.putExtra("dev1", d1);
+            intent.putExtra("dev2", d2);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

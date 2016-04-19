@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import java.util.Set;
+
 public class Settings extends AppCompatActivity {
 
     @Override
@@ -158,6 +160,16 @@ public class Settings extends AppCompatActivity {
             intent.putExtra("dev1", dev1);
             intent.putExtra("dev2", dev2);
             finish();
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_credits) {
+            Intent intent = new Intent(Settings.this, Credits.class);
+            intent.putExtra("lang", language);
+            intent.putExtra("drum", drum);
+            intent.putExtra("hand", hand);
+            intent.putExtra("dev1", dev1);
+            intent.putExtra("dev2", dev2);
             startActivity(intent);
             return true;
         }
