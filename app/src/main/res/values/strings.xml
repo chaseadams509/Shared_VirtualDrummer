@@ -25,8 +25,8 @@
     <string name="status_unsupported">Status: not supported</string>
     <string name="status_enabled">Status: Enabled</string>
     <string name="status_disabled">Status: Disabled</string>
-    <string name="status_drum1_selected"> selected as drumstick 1</string>
-    <string name="status_drum2_selected"> selected as drumstick 2</string>
+    <string name="status_drum1_selected">&#160;selected as drumstick 1</string>
+    <string name="status_drum2_selected">&#160;selected as drumstick 2</string>
     <string name="status_none_selected">Please enable Bluetooth and select at least one drumstick</string>
     <string name="state_starting">Starting…</string>
     <string name="state_connecting">Connecting to drumsticks</string>

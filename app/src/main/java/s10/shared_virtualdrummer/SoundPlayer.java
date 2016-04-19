@@ -3,9 +3,6 @@ package s10.shared_virtualdrummer;
 import android.content.Context;
 import android.media.MediaPlayer;
 
-/**
- * Created by cadams on 3/15/16.
- */
 public class SoundPlayer {
     private MediaPlayer bass;
     private MediaPlayer hiHat;
@@ -51,12 +48,14 @@ public class SoundPlayer {
         center.release();
     }
 
-    public void playBass(){
+   /*
+   public void playBass(){
         if (bass.isPlaying()){
             bass.seekTo(0);
         }
         bass.start();
     }
+    */
 
     public void playHiHat(){
         if (hiHat.isPlaying()){

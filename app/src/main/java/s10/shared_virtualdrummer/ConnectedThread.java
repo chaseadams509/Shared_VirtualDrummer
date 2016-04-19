@@ -5,29 +5,25 @@ import android.os.Handler;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 public class ConnectedThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final InputStream mmInStream;
-    private final OutputStream mmOutStream;
     private Handler mHandler;
 
     public ConnectedThread(BluetoothSocket socket, Handler cHandler) {
         mmSocket = socket;
         InputStream tmpIn = null;
-        OutputStream tmpOut = null;
         mHandler = cHandler;
 
         // Get the input and output streams, using temp objects because
         // member streams are final
         try {
             tmpIn = socket.getInputStream();
-            tmpOut = socket.getOutputStream();
-        } catch (IOException e) { }
-
+        } catch (IOException e) {
+            mHandler.obtainMessage(StaticVars.FAIL_CONNECT).sendToTarget();
+        }
         mmInStream = tmpIn;
-        mmOutStream = tmpOut;
     }
 
     public void run() {
@@ -50,17 +46,12 @@ public class ConnectedThread extends Thread {
         }
     }
 
-    // Call this from the main activity to send data to the remote device
-    public void write(byte[] bytes) {
-        try {
-            mmOutStream.write(bytes);
-        } catch (IOException e) { }
-    }
-
     // Call this from the main activity to shutdown the connection
     public void cancel() {
         try {
             mmSocket.close();
-        } catch (IOException e) { }
+        } catch (IOException e) {
+            mHandler.obtainMessage(StaticVars.FAIL_CONNECT).sendToTarget();
+        }
     }
 }
