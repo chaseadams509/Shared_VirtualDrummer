@@ -28,7 +28,6 @@ public class hw_activity extends AppCompatActivity {
     private TextView statusText;
     private ListView myListView;
     private ArrayAdapter<String> BTArrayAdapter;
-    private Set<BluetoothDevice> pairedDevices;
     private ArrayList<BluetoothDevice> pairedDevicesArray;
     private BluetoothAdapter myBluetoothAdapter;
     private BluetoothDevice dev1;
@@ -74,9 +73,10 @@ public class hw_activity extends AppCompatActivity {
             offBtn.setEnabled(false);
             listBtn.setEnabled(false);
             if(language) {
-                statusText.setText("Status: not supported");
+                //statusText.setText("Status: not supported");
+                statusText.setText(R.string.status_unsupported);
             } else {
-                statusText.setText("状態：　採用しません");
+                statusText.setText(R.string.status_unsupported_j);
             }
         } else {
             statusText = (TextView)findViewById(R.id.status_text);
@@ -110,30 +110,31 @@ public class hw_activity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> par, View v, int pos,
                                         long id) {
-                    connect_dv(par, v, pos, id);
+                    connect_dv(v, pos);
                 }
             });
 
             //create the arrayAdapter that contains the BTDevices
-            BTArrayAdapter = new ArrayAdapter<String>(this,
+            BTArrayAdapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_list_item_1);
             myListView.setAdapter(BTArrayAdapter);
             if(language) {
-                statusText.setText("Status: Enabled");
+                statusText.setText(R.string.status_enabled);
             } else {
-                statusText.setText("状態：　スタート");
+                statusText.setText(R.string.status_enabled_j);
             }
 
             if(!myBluetoothAdapter.isEnabled()) {
                 listBtn.setEnabled(false);
                 if(language) {
-                    statusText.setText("Status: Disabled");
+                    statusText.setText(R.string.status_disabled);
                 } else {
-                    statusText.setText("状態：　オフ");
+                    statusText.setText(R.string.status_disabled_j);
                 }
             }
 
-            pairedDevicesArray = new ArrayList<BluetoothDevice>();
+            pairedDevicesArray = new ArrayList<>();
+
         }
     }
 
@@ -150,14 +151,14 @@ public class hw_activity extends AppCompatActivity {
         listBtn.setEnabled(false);
         BTArrayAdapter.clear();
         if(language) {
-            statusText.setText("Status: Disabled");
+            statusText.setText(R.string.status_disabled);
         } else {
-            statusText.setText("状態：　オフ");
+            statusText.setText(R.string.status_disabled_j);
         }
     }
 
     public void list_bt(View view) {
-        pairedDevices = myBluetoothAdapter.getBondedDevices();
+        Set<BluetoothDevice> pairedDevices = myBluetoothAdapter.getBondedDevices();
         BTArrayAdapter.clear();
         for (BluetoothDevice device : pairedDevices) {
             BTArrayAdapter.add(device.getName() + "\n" + device.getAddress());
@@ -166,7 +167,7 @@ public class hw_activity extends AppCompatActivity {
     }
 
 
-    public void connect_dv(AdapterView<?> par, View v, int pos, long id) {
+    public void connect_dv(View v, int pos) {
         myBluetoothAdapter.cancelDiscovery();
         String mDeviceInfo = ((TextView) v).getText().toString();
         int name_end = mDeviceInfo.indexOf("\n");
@@ -174,18 +175,20 @@ public class hw_activity extends AppCompatActivity {
         BluetoothDevice selectedDevice = pairedDevicesArray.get(pos);
         if (dev1 == null){
             dev1 = selectedDevice;
+            statusText.setText(mDeviceInfo.substring(0, name_end));
             if(language) {
-                statusText.setText(mDeviceInfo.substring(0, name_end) + " selected as drumstick 1");
+                statusText.append(getResources().getString(R.string.status_drum1_selected));
             } else {
-                statusText.setText(mDeviceInfo.substring(0, name_end) + "は一本目の撥になりました");
+                statusText.append(getResources().getString(R.string.status_drum1_selected_j));
             }
         }
         else {
             dev2 = selectedDevice;
+            statusText.setText(mDeviceInfo.substring(0, name_end));
             if(language) {
-                statusText.setText(mDeviceInfo.substring(0, name_end) + " selected as drumstick 2");
+                statusText.append(getResources().getString(R.string.status_drum2_selected));
             } else {
-                statusText.setText(mDeviceInfo.substring(0, name_end) + "は二本目の撥になりました");
+                statusText.append(getResources().getString(R.string.status_drum2_selected_j));
             }
         }
     }
@@ -211,15 +214,15 @@ public class hw_activity extends AppCompatActivity {
             // Make sure the request was successful
             if(myBluetoothAdapter.isEnabled()) {
                 if(language) {
-                    statusText.setText("Status: Enabled");
+                    statusText.setText(R.string.status_enabled);
                 } else {
-                    statusText.setText("状態：　スタート");
+                    statusText.setText(R.string.status_enabled_j);
                 }
             } else {
                 if(language) {
-                    statusText.setText("Status: Disabled");
+                    statusText.setText(R.string.status_disabled);
                 } else {
-                    statusText.setText("状態：　オフ");
+                    statusText.setText(R.string.status_disabled_j);
                 }
             }
         }
@@ -244,9 +247,9 @@ public class hw_activity extends AppCompatActivity {
         //Sound add item selected for menu switching.
         if(dev1 == null) {
             if(language) {
-                statusText.setText("Please enable Bluetooth and select at least one drumstick");
+                statusText.setText(R.string.status_none_selected);
             } else {
-                statusText.setText("ブルートゥースをスタートし、くなくとも一本の撥をクリックください");
+                statusText.setText(R.string.status_none_selected_j);
             }
             return true;
         }

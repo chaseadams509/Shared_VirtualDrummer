@@ -11,6 +11,7 @@
     <string name="set_taiko">Taiko</string>
     <string name="set_lefthand">Left Handed</string>
     <string name="set_righthand">Right Handed</string>
+    <!--
     <string name="drum_bass">Bass</string>
     <string name="drum_hihat">HiHat</string>
     <string name="drum_ride">Ride</string>
@@ -20,6 +21,21 @@
     <string name="drum_tom3">Tom3</string>
     <string name="drum_taiko_rim">Taiko Rim</string>
     <string name="drum_taiko_center">Taiko Center</string>
+    -->
+    <string name="status_unsupported">Status: not supported</string>
+    <string name="status_enabled">Status: Enabled</string>
+    <string name="status_disabled">Status: Disabled</string>
+    <string name="status_drum1_selected"> selected as drumstick 1</string>
+    <string name="status_drum2_selected"> selected as drumstick 2</string>
+    <string name="status_none_selected">Please enable Bluetooth and select at least one drumstick</string>
+    <string name="state_starting">Starting…</string>
+    <string name="state_connecting">Connecting to drumsticks</string>
+    <string name="state_drum1_connected">Connected to first drumstick</string>
+    <string name="state_drum2_connected">Connected to second drumstick</string>
+    <string name="state_failed">Failed to connect to drumsticks</string>
+    <string name="play_rockkit_righthanded">Ready to Play!\nCurrently Playing right-handed Rock Kit</string>
+    <string name="play_rockkit_lefthanded">Ready to Play!\nCurrently Playing left-handed Rock Kit</string>
+    <string name="play_taiko">Ready to Play!\nCurrently Playing Japanese Taiko Drum</string>
 
     <string name="action_settings_j">⚙ 設定</string>
     <string name="action_blue_tooth_j">▶ プレイ</string>
@@ -30,6 +46,7 @@
     <string name="set_taiko_j">和太鼓</string>
     <string name="set_lefthand_j">左利き</string>
     <string name="set_righthand_j">右利き</string>
+    <!--
     <string name="drum_bass_j">ベース</string>
     <string name="drum_hihat_j">ハイハット</string>
     <string name="drum_ride_j">ライド</string>
@@ -39,4 +56,19 @@
     <string name="drum_tom3_j">トム3</string>
     <string name="drum_taiko_rim_j">ふち</string>
     <string name="drum_taiko_center_j">中央</string>
+    -->
+    <string name="status_unsupported_j">ステータス：　接続機能がありません</string>
+    <string name="status_enabled_j">ステータス：　接続オン</string>
+    <string name="status_disabled_j">ステータス：　接続オフ</string>
+    <string name="status_drum1_selected_j">を撥1に設定しました</string>
+    <string name="status_drum2_selected_j">を撥2に設定しました</string>
+    <string name="status_none_selected_j">ブルートゥースをスタートし、撥を選んで下さい。</string>
+    <string name="state_starting_j">少々お待ちください</string>
+    <string name="state_connecting_j">撥に接続中</string>
+    <string name="state_drum1_connected_j">１本目の撥に接続完了</string>
+    <string name="state_drum2_connected_j">２本目の撥に接続完了</string>
+    <string name="state_failed_j">撥への接続ができませんでした</string>
+    <string name="play_rockkit_righthanded_j">プレイ準備完了\n現在、右利き用のロックキットプレイ中</string>
+    <string name="play_rockkit_lefthanded_j">プレイ準備完了\n現在、左利き用のロックキットプレイ中</string>
+    <string name="play_taiko_j">プレイ準備完了\n現在、和太鼓プレイ中</string>
 </resources>

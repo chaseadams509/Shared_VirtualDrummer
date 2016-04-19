@@ -57,9 +57,9 @@ public class Bluetooth extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if(language) {
-            statusText.setText("Starting...");
+            statusText.setText(R.string.state_starting);
         } else {
-            statusText.setText("少々お待ちください");
+            statusText.setText(R.string.state_starting_j);
         }
 
         if(dev1 != null) {
@@ -72,9 +72,9 @@ public class Bluetooth extends AppCompatActivity {
         }
 
         if(language) {
-            statusText.setText("Connecting to drumsticks");
+            statusText.setText(R.string.state_connecting);
         } else {
-            statusText.setText("撥らを繋ぎ中です");
+            statusText.setText(R.string.state_connecting_j);
         }
     }
 
@@ -105,9 +105,9 @@ public class Bluetooth extends AppCompatActivity {
                 stick1_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler);
                 stick1_maintain.start();
                 if(language) {
-                    statusText.setText("Connected to first drumstick");
+                    statusText.setText(R.string.state_drum1_connected);
                 } else {
-                    statusText.setText("一本目の撥を繋いだところ");
+                    statusText.setText(R.string.state_drum1_connected_j);
                 }
                 numConnected++;
                 break;
@@ -115,18 +115,18 @@ public class Bluetooth extends AppCompatActivity {
                 stick2_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler);
                 stick2_maintain.start();
                 if(language) {
-                    statusText.setText("Connected to second drumstick");
+                    statusText.setText(R.string.state_drum2_connected);
                 } else {
-                    statusText.setText("二本目の撥を繋いだところ");
+                    statusText.setText(R.string.state_drum2_connected_j);
                 }
                 numConnected++;
                 break;
             case StaticVars.FAIL_CONNECT:
                 destroy_connections();
                 if(language) {
-                    statusText.setText("Failed to connect to drumsticks");
+                    statusText.setText(R.string.state_failed);
                 } else {
-                    statusText.setText("撥らを繋ぐ失敗");
+                    statusText.setText(R.string.state_failed_j);
                 }
                 break;
             case StaticVars.MESSAGE_READ:
@@ -139,28 +139,32 @@ public class Bluetooth extends AppCompatActivity {
                 break;
         }
 
-        if(numConnected == 2 || (numConnected == 1 && dev2 == null)) {
+        if(dev1 != null && ((numConnected == 2) ||
+                            (numConnected == 1 && dev2 == null) ) ) {
             if(language) {
-                statusText.setText("Ready to Play!\n");
+                //statusText.setText("Ready to Play!\n");
                 if(kitType) {
                     if(rightHand) {
-                        statusText.append("Currently Playing right-handed Rock Kit");
+                        //statusText.append("Currently Playing right-handed Rock Kit");
+                        statusText.setText(R.string.play_rockkit_righthanded);
                     } else {
-                        statusText.append("Currently Playing left-handed Rock Kit");
+                        //statusText.append("Currently Playing left-handed Rock Kit");
+                        statusText.setText(R.string.play_rockkit_lefthanded);
                     }
                 } else {
-                    statusText.append("Currently Playing Japanese Taiko Drum");
+                    //statusText.append("Currently Playing Japanese Taiko Drum");
+                    statusText.setText(R.string.play_taiko);
                 }
             } else {
-                statusText.setText("プレイ始めましょう!\n");
+                //statusText.setText("プレイ準備完了\n");
                 if(kitType) {
                     if(rightHand) {
-                        statusText.append("今、右利きでロックキットはプレイ中です。");
+                        statusText.setText(R.string.play_rockkit_righthanded_j);
                     } else {
-                        statusText.append("今、左利きでロックキットはプレイ中です。");
+                        statusText.setText(R.string.play_rockkit_lefthanded_j);
                     }
                 } else {
-                    statusText.append("今、和太鼓はプレイ中です。");
+                    statusText.setText(R.string.play_taiko_j);
                 }
             }
         }
@@ -186,8 +190,7 @@ public class Bluetooth extends AppCompatActivity {
 
             Pattern intPattern = Pattern.compile("[+-]\\d{3}");
             if(intPattern.matcher(ret).matches() ) {
-                int ret_int =  Integer.parseInt(ret);
-                return ret_int;
+                return Integer.parseInt(ret);
             }
             return Integer.MIN_VALUE;
         } else {
