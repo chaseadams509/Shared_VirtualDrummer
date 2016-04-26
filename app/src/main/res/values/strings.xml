@@ -15,6 +15,8 @@
     <string name="set_taiko">Taiko</string>
     <string name="set_lefthand">Left Handed</string>
     <string name="set_righthand">Right Handed</string>
+    <string name="debug_text">Debug Mode</string>
+    <string name="release_text">Release Mode</string>
     <string name="credits_text">Developers:\n•Taylor Meares\n•Chase Adams\n•Alex Coyle\n•Adam Zuravleff\n•Myles Hebert
     \n&#160;\nSpecial Thanks:\n•Ayanna Howard\n•Masato Kikuchi\n•Mike S\n•Fabio Varesano</string>
     <!--
@@ -39,9 +41,9 @@
     <string name="state_drum1_connected">Connected to first drumstick</string>
     <string name="state_drum2_connected">Connected to second drumstick</string>
     <string name="state_failed">Failed to connect to drumsticks</string>
-    <string name="play_rockkit_righthanded">Ready to Play!\nCurrently Playing right-handed Rock Kit</string>
-    <string name="play_rockkit_lefthanded">Ready to Play!\nCurrently Playing left-handed Rock Kit</string>
-    <string name="play_taiko">Ready to Play!\nCurrently Playing Japanese Taiko Drum</string>
+    <string name="play_rockkit_righthanded">Ready to Play!\nCurrently Playing \nright-handed Rock Kit</string>
+    <string name="play_rockkit_lefthanded">Ready to Play!\nCurrently Playing \nleft-handed Rock Kit</string>
+    <string name="play_taiko">Ready to Play!\nCurrently Playing \nJapanese Taiko Drum</string>
 
     <string name="action_settings_j">⚙ 設定</string>
     <string name="action_blue_tooth_j">▶ プレイ</string>
@@ -53,6 +55,8 @@
     <string name="set_taiko_j">和太鼓</string>
     <string name="set_lefthand_j">左利き</string>
     <string name="set_righthand_j">右利き</string>
+    <string name="debug_text_j">デバッグモード</string>
+    <string name="release_text_j">発売モード</string>
     <string name="credits_text_j">開発者:\n•Taylor Meares\n•Chase Adams\n•Alex Coyle\n•Adam Zuravleff\n•Myles Hebert
     \n&#160;\nありがとうございました:\n•Ayanna Howard\n•菊池\n•Mike S\n•Fabio Varesano</string>
     <!--
@@ -77,7 +81,7 @@
     <string name="state_drum1_connected_j">１本目の撥に接続完了</string>
     <string name="state_drum2_connected_j">２本目の撥に接続完了</string>
     <string name="state_failed_j">撥への接続ができませんでした</string>
-    <string name="play_rockkit_righthanded_j">プレイ準備完了\n現在、右利き用のロックキットプレイ中</string>
-    <string name="play_rockkit_lefthanded_j">プレイ準備完了\n現在、左利き用のロックキットプレイ中</string>
-    <string name="play_taiko_j">プレイ準備完了\n現在、和太鼓プレイ中</string>
+    <string name="play_rockkit_righthanded_j">プレイ準備完了\n現在、\n右利き用のロックキットプレイ中</string>
+    <string name="play_rockkit_lefthanded_j">プレイ準備完了\n現在、\n左利き用のロックキットプレイ中</string>
+    <string name="play_taiko_j">プレイ準備完了\n現在、\n和太鼓プレイ中</string>
 </resources>

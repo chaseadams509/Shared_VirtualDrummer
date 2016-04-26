@@ -23,6 +23,7 @@ public class Settings extends AppCompatActivity {
         final boolean language = get_intent.getBooleanExtra("lang", true);
         final boolean drumset = get_intent.getBooleanExtra("drum", true);
         final boolean handed = get_intent.getBooleanExtra("hand", true);
+        final boolean debug = get_intent.getBooleanExtra("debug", false);
         final BluetoothDevice d1 = get_intent.getParcelableExtra("dev1");
         final BluetoothDevice d2 = get_intent.getParcelableExtra("dev2");
 
@@ -47,6 +48,14 @@ public class Settings extends AppCompatActivity {
             right_set.setBackgroundColor(Color.LTGRAY);
             right_set.setTextColor(Color.BLACK);
         }
+        Button debug_set = (Button) this.findViewById(R.id.set_debug);
+        Button release_set = (Button) this.findViewById(R.id.set_release);
+        if (debug){
+            debug_set.setBackgroundColor(Color.parseColor("#0619bf"));
+            debug_set.setTextColor(Color.WHITE);
+            release_set.setBackgroundColor(Color.LTGRAY);
+            release_set.setTextColor(Color.BLACK);
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ImageButton lang_switch = (ImageButton) this.findViewById(R.id.lang_set);
@@ -57,6 +66,7 @@ public class Settings extends AppCompatActivity {
                 intent.putExtra("lang", !language);
                 intent.putExtra("drum", drumset);
                 intent.putExtra("hand", handed);
+                intent.putExtra("debug", debug);
                 intent.putExtra("dev1", d1);
                 intent.putExtra("dev2", d2);
                 finish();
@@ -66,11 +76,12 @@ public class Settings extends AppCompatActivity {
         taiko_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(drumset) {
+                if (drumset) {
                     Intent intent = new Intent(Settings.this, Settings.class);
                     intent.putExtra("drum", false);
                     intent.putExtra("lang", language);
                     intent.putExtra("hand", handed);
+                    intent.putExtra("debug", debug);
                     intent.putExtra("dev1", d1);
                     intent.putExtra("dev2", d2);
                     finish();
@@ -86,6 +97,7 @@ public class Settings extends AppCompatActivity {
                     intent.putExtra("drum", true);
                     intent.putExtra("lang", language);
                     intent.putExtra("hand", handed);
+                    intent.putExtra("debug", debug);
                     intent.putExtra("dev1", d1);
                     intent.putExtra("dev2", d2);
                     finish();
@@ -101,6 +113,7 @@ public class Settings extends AppCompatActivity {
                     intent.putExtra("hand", false);
                     intent.putExtra("lang", language);
                     intent.putExtra("drum", drumset);
+                    intent.putExtra("debug", debug);
                     intent.putExtra("dev1", d1);
                     intent.putExtra("dev2", d2);
                     finish();
@@ -116,6 +129,39 @@ public class Settings extends AppCompatActivity {
                     intent.putExtra("hand", true);
                     intent.putExtra("lang", language);
                     intent.putExtra("drum", drumset);
+                    intent.putExtra("debug", debug);
+                    intent.putExtra("dev1", d1);
+                    intent.putExtra("dev2", d2);
+                    finish();
+                    startActivity(intent);
+                }
+            }
+        });
+        debug_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!debug) {
+                    Intent intent = new Intent(Settings.this, Settings.class);
+                    intent.putExtra("hand", handed);
+                    intent.putExtra("lang", language);
+                    intent.putExtra("drum", drumset);
+                    intent.putExtra("debug", true);
+                    intent.putExtra("dev1", d1);
+                    intent.putExtra("dev2", d2);
+                    finish();
+                    startActivity(intent);
+                }
+            }
+        });
+        release_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(debug) {
+                    Intent intent = new Intent(Settings.this, Settings.class);
+                    intent.putExtra("hand", handed);
+                    intent.putExtra("lang", language);
+                    intent.putExtra("drum", drumset);
+                    intent.putExtra("debug", false);
                     intent.putExtra("dev1", d1);
                     intent.putExtra("dev2", d2);
                     finish();
@@ -149,6 +195,7 @@ public class Settings extends AppCompatActivity {
         final boolean language = get_intent.getBooleanExtra("lang", true);
         final boolean drum = get_intent.getBooleanExtra("drum", true);
         final boolean hand = get_intent.getBooleanExtra("hand", true);
+        final boolean debug = get_intent.getBooleanExtra("debug", false);
         final BluetoothDevice dev1 = get_intent.getExtras().getParcelable("dev1");
         final BluetoothDevice dev2 = get_intent.getExtras().getParcelable("dev2");
 
@@ -157,6 +204,7 @@ public class Settings extends AppCompatActivity {
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("debug", debug);
             intent.putExtra("dev1", dev1);
             intent.putExtra("dev2", dev2);
             finish();
@@ -168,13 +216,20 @@ public class Settings extends AppCompatActivity {
             intent.putExtra("lang", language);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("debug", debug);
             intent.putExtra("dev1", dev1);
             intent.putExtra("dev2", dev2);
+            finish();
             startActivity(intent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
 }

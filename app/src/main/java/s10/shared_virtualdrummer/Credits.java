@@ -52,6 +52,7 @@ public class Credits  extends AppCompatActivity {
         final boolean lang = get_intent.getBooleanExtra("lang", true);
         final boolean drum = get_intent.getBooleanExtra("drum", true);
         final boolean hand = get_intent.getBooleanExtra("hand", true);
+        final boolean debug = get_intent.getBooleanExtra("debug", false);
         final BluetoothDevice dev1 = get_intent.getParcelableExtra("dev1");
         final BluetoothDevice dev2 = get_intent.getParcelableExtra("dev2");
 
@@ -62,8 +63,10 @@ public class Credits  extends AppCompatActivity {
             intent.putExtra("lang", lang);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("debug", debug);
             intent.putExtra("dev1", dev1);
             intent.putExtra("dev2", dev2);
+            finish();
             startActivity(intent);
             return true;
         }
@@ -72,8 +75,10 @@ public class Credits  extends AppCompatActivity {
             intent.putExtra("lang", lang);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("debug", debug);
             intent.putExtra("dev1", dev1);
             intent.putExtra("dev2", dev2);
+            finish();
             startActivity(intent);
             return true;
         }

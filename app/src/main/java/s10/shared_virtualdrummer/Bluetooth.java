@@ -26,6 +26,7 @@ public class Bluetooth extends AppCompatActivity {
     private boolean kitType = true;
     private boolean rightHand = true;
     private boolean language = true;
+    private boolean debug_mode = false;
     private int numConnected = 0;
 
     Handler mHandler = new Handler() {
@@ -43,6 +44,7 @@ public class Bluetooth extends AppCompatActivity {
         language = get_intent.getBooleanExtra("lang", true);
         kitType = get_intent.getBooleanExtra("drum", true);
         rightHand = get_intent.getBooleanExtra("hand", true);
+        debug_mode = get_intent.getBooleanExtra("debug", false);
         if (language) {
             setContentView(R.layout.bluetooth);
         }else{
@@ -110,6 +112,7 @@ public class Bluetooth extends AppCompatActivity {
                     statusText.setText(R.string.state_drum1_connected_j);
                 }
                 numConnected++;
+                set_status_text();
                 break;
             case StaticVars.SUCCESS_CONNECT_2:
                 stick2_maintain = new ConnectedThread((BluetoothSocket) msg.obj, mHandler);
@@ -120,6 +123,7 @@ public class Bluetooth extends AppCompatActivity {
                     statusText.setText(R.string.state_drum2_connected_j);
                 }
                 numConnected++;
+                set_status_text();
                 break;
             case StaticVars.FAIL_CONNECT:
                 destroy_connections();
@@ -130,6 +134,7 @@ public class Bluetooth extends AppCompatActivity {
                 }
                 break;
             case StaticVars.MESSAGE_READ:
+                set_status_text();
                 byte[] readBuf = (byte[])msg.obj;
                 String s = new String(readBuf);
                 int r = parse_data(s);
@@ -138,9 +143,11 @@ public class Bluetooth extends AppCompatActivity {
                 }
                 break;
         }
+    }
 
+    public void set_status_text() {
         if(dev1 != null && ((numConnected == 2) ||
-                            (numConnected == 1 && dev2 == null) ) ) {
+                (numConnected == 1 && dev2 == null) ) ) {
             if(language) {
                 //statusText.setText("Ready to Play!\n");
                 if(kitType) {
@@ -208,6 +215,9 @@ public class Bluetooth extends AppCompatActivity {
                 //Left Handed, invert everything
                 Yaw = -1 * Yaw;
             }
+            if(debug_mode) {
+                statusText.append("\n\nYaw Value is " + Yaw + "\n");
+            }
 
             if(Yaw < -40) {
                 drumPlayer.playHiHat();
@@ -256,6 +266,7 @@ public class Bluetooth extends AppCompatActivity {
         final boolean lang = get_intent.getBooleanExtra("lang", true);
         final boolean drum = get_intent.getBooleanExtra("drum", true);
         final boolean hand = get_intent.getBooleanExtra("hand", true);
+        final boolean debug = get_intent.getBooleanExtra("debug", false);
         final BluetoothDevice d1 = get_intent.getParcelableExtra("dev1");
         final BluetoothDevice d2 = get_intent.getParcelableExtra("dev2");
 
@@ -266,6 +277,7 @@ public class Bluetooth extends AppCompatActivity {
             intent.putExtra("lang", lang);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("debug", debug);
             intent.putExtra("dev1", d1);
             intent.putExtra("dev2", d2);
             destroy_connections();
@@ -279,8 +291,10 @@ public class Bluetooth extends AppCompatActivity {
             intent.putExtra("lang", lang);
             intent.putExtra("drum", drum);
             intent.putExtra("hand", hand);
+            intent.putExtra("debug", debug);
             intent.putExtra("dev1", d1);
             intent.putExtra("dev2", d2);
+            finish();
             startActivity(intent);
             return true;
         }
