@@ -219,15 +219,15 @@ public class Bluetooth extends AppCompatActivity {
                 statusText.append("\n\nYaw Value is " + Yaw + "\n");
             }
 
-            if(Yaw < -40) {
+            if(Yaw < -45) {
                 drumPlayer.playHiHat();
-            } else if (Yaw < -5 && Yaw >= -40) {
+            } else if (Yaw < -5 && Yaw >= -45) {
                 drumPlayer.playSnare();
             } else if (Yaw < 10 && Yaw >= -5) {
                 drumPlayer.playTom1();
             } else if (Yaw < 25 && Yaw >= 10) {
                 drumPlayer.playTom2();
-            } else if (Yaw < 45 && Yaw >= 25) {
+            } else if (Yaw < 50 && Yaw >= 25) {
                 drumPlayer.playRide();
             } else { // Yaw >= 45
                 drumPlayer.playTom3();
