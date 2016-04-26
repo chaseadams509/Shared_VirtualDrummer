@@ -204,23 +204,23 @@ public class Bluetooth extends AppCompatActivity {
 
         if(kitType) {
             //Normal Drum Kit
-            if(!rightHand) {
+            if (!rightHand) {
                 //Left Handed, invert everything
                 Yaw = -1 * Yaw;
             }
 
-            if (Yaw < -40 && Yaw >= -80) {
-                drumPlayer.playSnare();
-            } else if (Yaw < 0 && Yaw >= -40) {
-                drumPlayer.playTom1();
-            } else if (Yaw < 40 && Yaw >= 0) {
-                drumPlayer.playTom2();
-            } else if (Yaw < 80 && Yaw >= 40) {
-                drumPlayer.playTom3();
-            } else if (Yaw < -80){
+            if(Yaw < -40) {
                 drumPlayer.playHiHat();
-            } else { // Yaw > 80
+            } else if (Yaw < -5 && Yaw >= -40) {
+                drumPlayer.playSnare();
+            } else if (Yaw < 10 && Yaw >= -5) {
+                drumPlayer.playTom1();
+            } else if (Yaw < 25 && Yaw >= 10) {
+                drumPlayer.playTom2();
+            } else if (Yaw < 45 && Yaw >= 25) {
                 drumPlayer.playRide();
+            } else { // Yaw >= 45
+                drumPlayer.playTom3();
             }
         } else {
             //Taiko Drum
